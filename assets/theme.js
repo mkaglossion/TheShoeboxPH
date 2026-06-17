@@ -3356,6 +3356,100 @@ theme.SwiperCollection = (function() {
   return SwiperCollection;
 })();
 
+theme.SwiperBanner = (function() {
+  function SwiperBanner(container) {
+    this.$container = $(container);
+    this.$slider = this.$container.find('.swiper-banner__slider');
+    this.swiper = null;
+
+    if (!this.$slider.length || typeof Swiper === 'undefined') return;
+
+    this.onLoad();
+  }
+
+  SwiperBanner.prototype = _.assignIn({}, SwiperBanner.prototype, {
+    _isTrue: function(value) {
+      return value === true || value === 'true';
+    },
+
+    onLoad: function() {
+      var slideCount = this.$slider.find('.swiper-slide').length;
+      var loopEnabled = this._isTrue(this.$container.data('loop')) && slideCount > 1;
+      var autoplayEnabled = this._isTrue(this.$container.data('autoplay')) && slideCount > 1;
+      var dotsEnabled = this._isTrue(this.$container.data('dots'));
+      var arrowsEnabled = this._isTrue(this.$container.data('arrows'));
+      var delay = parseInt(this.$container.data('delay'), 10) || 3000;
+      var speed = parseInt(this.$container.data('speed'), 10) || 700;
+      var pauseOnHover = this._isTrue(this.$container.data('pause-on-hover'));
+      var $pagination = this.$container.find('.swiper-pagination');
+      var $next = this.$container.find('.swiper-button-next');
+      var $prev = this.$container.find('.swiper-button-prev');
+
+      this.swiper = new Swiper(this.$slider[0], {
+        slidesPerView: 1,
+        spaceBetween: 0,
+        speed: speed,
+        loop: loopEnabled,
+        allowTouchMove: true,
+        simulateTouch: true,
+        grabCursor: true,
+        threshold: 5,
+        touchRatio: 1,
+        touchStartPreventDefault: false,
+        touchStartForcePreventDefault: false,
+        followFinger: true,
+        preventClicks: false,
+        preventClicksPropagation: false,
+        observer: true,
+        observeParents: true,
+        watchOverflow: true,
+        a11y: true,
+        keyboard: {
+          enabled: true,
+        },
+        autoplay: autoplayEnabled ? {
+          delay: delay,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: pauseOnHover,
+        } : false,
+        pagination: {
+          el: $pagination[0],
+          clickable: true,
+          enabled: dotsEnabled,
+        },
+        navigation: {
+          nextEl: $next[0],
+          prevEl: $prev[0],
+          enabled: arrowsEnabled,
+        },
+      });
+    },
+
+    onUnload: function() {
+      if (this.swiper && this.swiper.destroy) {
+        this.swiper.destroy(true, true);
+      }
+      this.swiper = null;
+    },
+
+    onBlockSelect: function(evt) {
+      if (!this.swiper) return;
+
+      var $slide = this.$container.find('.swiper-slide[data-block-id="' + evt.detail.blockId + '"]');
+      if (!$slide.length) return;
+
+      var slideIndex = $slide.data('slide-index');
+      if (this.swiper.params.loop && this.swiper.slideToLoop) {
+        this.swiper.slideToLoop(slideIndex);
+      } else {
+        this.swiper.slideTo(slideIndex);
+      }
+    }
+  });
+
+  return SwiperBanner;
+})();
+
 theme.init = function() {
   theme.customerTemplates.init();
   slate.rte.wrapTable();
@@ -3402,6 +3496,7 @@ theme.init = function() {
   sections.register('parallax-image', theme.ParrallaxImage);
   sections.register('bgcollection',theme.Bgcollection);
   sections.register('swipercollection',theme.SwiperCollection);
+  sections.register('swiperbanner',theme.SwiperBanner);
 
   // Standalone modules
   $(window).on('load', theme.articleImages);
