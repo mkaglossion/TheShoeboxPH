@@ -27,7 +27,7 @@
       </style>
       <div class="col-md-{{block.settings.width}}" {{ block.shopify_attributes }}>
       <div class="banner-{{block.id}}" style="padding:{{block.settings.paddingblock}}">
-        <figure class="position-relative m-0 hv-image-saturate text-{{block.settings.text_align}} {% if section.settings.no_gutter %}m-0{% endif %} d-flex {{block.settings.reverse}}">
+        <figure class="position-relative m-0 text-{{block.settings.text_align}} {% if section.settings.no_gutter %}m-0{% endif %} d-flex {{block.settings.reverse}}">
           {%- if block.settings.image != blank -%}
           {%- if block.settings.button_link != blank -%}<a href="{{block.settings.button_link}}"> {%- endif -%}
           <img src="{% include 'srcBlank' %}" class="lazyload transition" data-src="{{block.settings.image | img_url:'1920x'}}">

@@ -12,7 +12,7 @@
             {%- when 'html' -%}
             {{ block.settings.code }}
             {%- when 'banner' -%}
-              <figure class="banner-theme hv-image-saturate banner-theme-{{block.settings.vertical}} banner-theme-{{block.settings.horizontal}} text-{{block.settings.text_align}}">
+              <figure class="banner-theme banner-theme-{{block.settings.vertical}} banner-theme-{{block.settings.horizontal}} text-{{block.settings.text_align}}">
                 {%- if block.settings.image != blank -%}
                 <img src="{%- include 'srcBlank' -%}" class="lazyload transition" data-src="{{block.settings.image | img_url:'960x'}}">
                 {%- else -%}

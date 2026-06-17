@@ -15,6 +15,19 @@
     height: 350px;
   }
   {%- endif -%}
+  .customstyle{{ section.id }} .banner-theme,
+  .customstyle{{ section.id }} .banner-theme img,
+  .customstyle{{ section.id }} .banner-theme .transition,
+  .customstyle{{ section.id }} .banner-theme:hover img,
+  .customstyle{{ section.id }} .banner-theme:hover .transition {
+    -webkit-transform: none !important;
+    transform: none !important;
+  }
+  .customstyle{{ section.id }} .banner-theme img,
+  .customstyle{{ section.id }} .banner-theme .transition {
+    -webkit-transition: none !important;
+    transition: none !important;
+  }
   {%- if section.settings.show_overlay %}
     {% assign hex2rgb_hex = section.settings.bg_overlay %}
     {% include 'hex2rgb' %} 
@@ -59,7 +72,7 @@
         }
       </style>
       <div class="col-md-{{block.settings.width}}" {{ block.shopify_attributes }} data-aos="{{section.settings.animation}}" data-aos-duration="1000">
-        <figure class="banner-theme hv-image-saturate banner-theme-{{block.settings.vertical}} banner-theme-{{block.settings.horizontal}} text-{{block.settings.text_align}} {% if section.settings.no_gutter %}m-0{% endif %} banner-theme-{{block.id}}">
+        <figure class="banner-theme banner-theme-{{block.settings.vertical}} banner-theme-{{block.settings.horizontal}} text-{{block.settings.text_align}} {% if section.settings.no_gutter %}m-0{% endif %} banner-theme-{{block.id}}">
           {%- if block.settings.image != blank -%}
           <img src="{% include 'srcBlank' %}" class="lazyload transition {% if block.settings.image_mobile != blank %} d-none d-lg-block {% endif %}" data-src="{{block.settings.image | img_url:'1920x'}}">
             {%- if block.settings.image_mobile != blank -%}
