@@ -39,6 +39,10 @@
           {
             "value": "header-6",
             "label": "Header 6"
+          },
+          {
+            "value": "header-7",
+            "label": "Header 7"
           }
         ]
       },
