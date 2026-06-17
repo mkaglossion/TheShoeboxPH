@@ -200,18 +200,18 @@
         {%- if block.settings.brand_link != blank -%}
           <a
             href="{{ block.settings.brand_link }}"
-            class="brand-logo-strip__tab{% if forloop.first %} is-active{% endif %}"
+            class="brand-logo-strip__tab"
             data-brand-tab="{{ block.id }}"
             aria-controls="BrandLogoStripPanel-{{ section.id }}-{{ block.id }}"
-            aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+            aria-selected="false"
             {{ block.shopify_attributes }}>
         {%- else -%}
           <button
             type="button"
-            class="brand-logo-strip__tab{% if forloop.first %} is-active{% endif %}"
+            class="brand-logo-strip__tab"
             data-brand-tab="{{ block.id }}"
             aria-controls="BrandLogoStripPanel-{{ section.id }}-{{ block.id }}"
-            aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+            aria-selected="false"
             {{ block.shopify_attributes }}>
         {%- endif -%}
           {%- if block.settings.image != blank -%}
@@ -255,10 +255,10 @@
 
         <section
           id="BrandLogoStripPanel-{{ section.id }}-{{ block.id }}"
-          class="brand-logo-strip__panel{% if forloop.first %} is-active{% endif %}"
+          class="brand-logo-strip__panel"
           data-brand-panel="{{ block.id }}"
           role="tabpanel"
-          aria-hidden="{% if forloop.first %}false{% else %}true{% endif %}">
+          aria-hidden="true">
           <div class="brand-logo-strip__panel-inner">
             {%- if brand_columns_source != blank and brand_columns_source.links.size > 0 -%}
               <div class="brand-logo-strip__mega-grid">
@@ -296,10 +296,12 @@
     </div>
   </div>
 
-  <script>
+    <script>
     (function () {
       var root = document.getElementById('{{ section_key }}');
       if (!root) return;
+
+      var isTouchLike = (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) || (navigator.maxTouchPoints || 0) > 0;
 
       function activateBrand(id) {
         var brandTabs = root.querySelectorAll('[data-brand-tab]');
@@ -318,21 +320,63 @@
         });
       }
 
-      root.querySelectorAll('[data-brand-tab]').forEach(function (tab) {
-        tab.addEventListener('click', function () {
-          activateBrand(tab.getAttribute('data-brand-tab'));
+      function deactivateBrands() {
+        var brandTabs = root.querySelectorAll('[data-brand-tab]');
+        var brandPanels = root.querySelectorAll('[data-brand-panel]');
+
+        brandTabs.forEach(function (tab) {
+          tab.classList.remove('is-active');
+          tab.setAttribute('aria-selected', 'false');
         });
+
+        brandPanels.forEach(function (panel) {
+          panel.classList.remove('is-active');
+          panel.setAttribute('aria-hidden', 'true');
+        });
+      }
+
+      root.querySelectorAll('[data-brand-tab]').forEach(function (tab) {
         tab.addEventListener('mouseenter', function () {
           activateBrand(tab.getAttribute('data-brand-tab'));
         });
+
         tab.addEventListener('focus', function () {
           activateBrand(tab.getAttribute('data-brand-tab'));
         });
       });
 
-      var firstBrand = root.querySelector('[data-brand-tab]');
-      if (firstBrand) {
-        activateBrand(firstBrand.getAttribute('data-brand-tab'));
+      root.addEventListener('mouseleave', function () {
+        deactivateBrands();
+      });
+
+      if (isTouchLike) {
+        var firstTab = root.querySelector('[data-brand-tab]');
+
+        if (firstTab) {
+          activateBrand(firstTab.getAttribute('data-brand-tab'));
+        }
+
+        root.querySelectorAll('[data-brand-tab]').forEach(function (tab) {
+          tab.addEventListener('click', function (event) {
+            event.preventDefault();
+            var tabId = tab.getAttribute('data-brand-tab');
+            var isActive = tab.classList.contains('is-active');
+
+            if (isActive) {
+              var href = tab.getAttribute('href');
+
+              if (href && href !== '#') {
+                window.location.href = href;
+                return;
+              }
+
+              deactivateBrands();
+              return;
+            }
+
+            activateBrand(tabId);
+          });
+        });
       }
     })();
   </script>

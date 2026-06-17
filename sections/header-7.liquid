@@ -39,6 +39,25 @@
       padding: 8px 0;
     }
 
+    #shopify-section-{{ section.id }} .site-header-7__topbar-toggle {
+      display: none;
+      appearance: none;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      text-transform: inherit;
+      letter-spacing: inherit;
+      padding: 0;
+      align-items: center;
+      gap: 6px;
+    }
+
+    #shopify-section-{{ section.id }} .site-header-7__topbar-toggle .icon {
+      width: 14px;
+      height: 14px;
+    }
+
     #shopify-section-{{ section.id }} .site-header-7__topbar-links {
       display: flex;
       align-items: center;
@@ -51,6 +70,10 @@
       color: inherit;
       text-decoration: none;
       transition: opacity 0.18s ease, color 0.18s ease;
+    }
+
+    #shopify-section-{{ section.id }} .site-header-7__topbar-account {
+      white-space: nowrap;
     }
 
     #shopify-section-{{ section.id }} .site-header-7__topbar-links a:hover,
@@ -312,6 +335,12 @@
       height: 25.5px;
     }
 
+    #shopify-section-{{ section.id }} .site-header-7__actions .site-header-7__search-link .svg-search,
+    #shopify-section-{{ section.id }} .site-header-7__actions .site-header-7__search-link svg {
+      width: 22px;
+      height: 22px;
+    }
+
     #shopify-section-{{ section.id }} .site-header-7__actions .js-wishlist-link .js-wishlist-count,
     #shopify-section-{{ section.id }} .site-header-7__actions .site-header__cart-indicator {
       position: absolute;
@@ -334,6 +363,44 @@
 
     @media (max-width: 991px) {
       #shopify-section-{{ section.id }} .site-header-7__topbar {
+        display: block;
+        font-size: 11px;
+        letter-spacing: 0.06em;
+      }
+
+      #shopify-section-{{ section.id }} .site-header-7__topbar-inner {
+        min-height: 34px;
+        justify-content: flex-start;
+        align-items: center;
+        flex-wrap: nowrap;
+        gap: 12px;
+        padding: 6px 0;
+      }
+
+      #shopify-section-{{ section.id }} .site-header-7__topbar-toggle {
+        display: none;
+      }
+
+      #shopify-section-{{ section.id }} .site-header-7__topbar-links {
+        display: flex;
+        width: auto;
+        justify-content: flex-start;
+        gap: 14px;
+        white-space: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+
+      #shopify-section-{{ section.id }} .site-header-7__topbar-links::-webkit-scrollbar {
+        display: none;
+      }
+
+      #shopify-section-{{ section.id }} .site-header-7__topbar-links a {
+        flex: 0 0 auto;
+      }
+
+      #shopify-section-{{ section.id }} .site-header-7__topbar-account {
         display: none;
       }
 
@@ -349,7 +416,11 @@
       }
 
       #shopify-section-{{ section.id }} .site-header-7__search {
-        display: none;
+        display: none !important;
+      }
+
+      #shopify-section-{{ section.id }} .site-header-7__search-results {
+        display: none !important;
       }
 
       #shopify-section-{{ section.id }} .site-header-7__actions {
@@ -376,13 +447,31 @@
     }
   </style>
 
-  {%- if section.settings.enabletopbar and section.settings.text_topbar != blank -%}
+  {%- if section.settings.enabletopbar -%}
+    {%- assign topbar_html = section.settings.text_topbar | strip -%}
+    {%- capture topbar_account_link -%}
+      <a href="/account" class="site-header-7__topbar-account">{%- if customer -%}Profile{%- else -%}Sign up / Login{%- endif -%}</a>
+    {%- endcapture -%}
     <div class="site-header-7__topbar">
       <div class="{{ section.settings.setwidth }}">
         <div class="site-header-7__topbar-inner">
-          <div class="site-header-7__topbar-links">
-            {{ section.settings.text_topbar }}
-          </div>
+          {%- if topbar_html != blank -%}
+            <div class="site-header-7__topbar-links" id="Header7TopbarLinks-{{ section.id }}">
+              {%- if topbar_html contains '/account' -%}
+                {{ topbar_html
+                  | replace: '<a href="/account">Sign up / Login</a>', topbar_account_link
+                  | replace: '<a href="/account">Profile</a>', topbar_account_link }}
+              {%- else -%}
+                {{ topbar_html }}
+                {{ topbar_account_link }}
+              {%- endif -%}
+            </div>
+          {%- else -%}
+            <div class="site-header-7__topbar-links" id="Header7TopbarLinks-{{ section.id }}">
+              <a href="#">Find a store</a>
+              {{ topbar_account_link }}
+            </div>
+          {%- endif -%}
         </div>
       </div>
     </div>
@@ -422,6 +511,9 @@
         </div>
 
         <div class="site-header-7__actions">
+          <a href="/search" class="site-header__link site-header-7__search-link d-lg-none" title="{{ 'general.search.title' | t }}" aria-label="{{ 'general.search.title' | t }}">
+            {%- include 'icon-search' -%}
+          </a>
           {%- include 'block-wishlist', show_wishlist: true -%}
           <a href="/cart" class="site-header__link site-header__cart site-header-7__cart" title="{{ 'cart.general.title' | t }}">
             {%- include 'icon-cart' -%}
@@ -448,7 +540,6 @@
         $results = $root.find('.site-header-7__search-results'),
         $clear = $form.find('.js-search-clear'),
         currentRequest,
-        searchTimer,
         requestSerial = 0,
         displayLimit = 6;
 
@@ -458,6 +549,14 @@
 
     function showResults() {
       $results.addClass('active').stop(true, true).fadeIn(150);
+    }
+
+    function renderLoading(term) {
+      var searchingText = (theme.strings && theme.strings.ajaxSearchSearching) || 'Searching';
+
+      $results
+        .html('<p class="text-center site-header-7__search-loading">' + searchingText + ' "' + $('<div />').text(term).html() + '"...</p>');
+      showResults();
     }
 
     function renderResults(data, searchURL, serial) {
@@ -512,7 +611,7 @@
     }
 
     function fetchResults(term) {
-      var searchURL = '/search?type=product&q=' + encodeURIComponent(term);
+      var searchURL = '/search?type=product&q=*' + encodeURIComponent(term) + '*';
 
       if (currentRequest) {
         currentRequest.abort();
@@ -531,19 +630,23 @@
 
     function handleInput() {
       var term = $.trim($input.val());
-
-      clearTimeout(searchTimer);
+      var previousTerm = $input.attr('data-old-term') || '';
 
       if (!term.length) {
+        $input.removeAttr('data-old-term');
         hideResults();
         $form.removeClass('is-filled');
         return;
       }
 
+      if (term === previousTerm) {
+        return;
+      }
+
+      $input.attr('data-old-term', term);
       $form.addClass('is-filled');
-      searchTimer = setTimeout(function() {
-        fetchResults(term);
-      }, 180);
+      renderLoading(term);
+      fetchResults(term);
     }
 
     $input.attr({
@@ -551,13 +654,14 @@
       spellcheck: 'false',
       inputmode: 'search',
       'aria-autocomplete': 'list'
-    }).on('input', handleInput).on('focus', function() {
+    }).on('input keyup change paste', handleInput).on('focus', function() {
       if ($.trim($input.val()).length) {
         handleInput();
       }
     }).on('keydown', function(event) {
       if (event.key === 'Escape') {
         $input.val('');
+        $input.removeAttr('data-old-term');
         hideResults();
         $form.removeClass('is-filled');
       }
@@ -573,17 +677,18 @@
         return;
       }
 
+      $input.attr('data-old-term', term);
+      renderLoading(term);
       fetchResults(term);
     });
 
     $clear.on('click', function() {
-      clearTimeout(searchTimer);
-
       if (currentRequest) {
         currentRequest.abort();
       }
 
       $input.val('');
+      $input.removeAttr('data-old-term');
       hideResults();
       $form.removeClass('is-filled');
       $input.trigger('focus');
