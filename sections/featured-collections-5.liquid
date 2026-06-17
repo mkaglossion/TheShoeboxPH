@@ -1,0 +1,416 @@
+<!-- featured-collections-5.liquid -->
+
+<style>
+    {% assign hex2rgb_hex = section.settings.bg_overlay %}
+    {% include 'hex2rgb' %}
+    {%- if section.settings.nowrap -%}
+    .swipercollection .swiper-container {
+      overflow: visible;
+    }
+    {%- endif -%}
+    .swiperco-{{section.id}} .collection-card-3 .collection-card__image .hv-image:before{
+      background-color: rgb({{ hex2rgb_r }}, {{ hex2rgb_g }}, {{ hex2rgb_b }}, {{ section.settings.opacity_overlay }});
+    }
+    .swiperco-{{section.id}} .collection-card-3 .collection-card__image:hover .hv-image:before{
+      opacity: .7;
+    }
+    {%- if section.settings.scrollbar -%}
+    .swipercol-{{section.id}}.swiper-padding{
+        padding-bottom: 64px;
+    }
+    {%- endif -%}
+    {% if section.settings.stylecollection == 'name' %} 
+    .collection-card-3 .collection-card__meta{
+      pointer-events:inherit;
+    }
+    {%- endif -%}
+    .customstyle{{ section.id }} .collection-card__image .photo-wrapper.square{
+      padding-top: 100% !important;
+    }
+    .customstyle{{ section.id }} .collection-card__image .photo-wrapper.landscape{
+      padding-top:  75% !important;
+    }
+    .customstyle{{ section.id }} .collection-card__image .photo-wrapper.portrait{
+      padding-top: 130% !important;
+    }
+    .customstyle{{ section.id }} .collection-card__image .photo-wrapper.wide{
+      padding-top: 60% !important;
+    }
+    .collection-card__image .photo-wrapper.square img, .collection-card__image .photo-wrapper.landscape img, .collection-card__image .photo-wrapper.portrait img, .collection-card__image .photo-wrapper.wide img {
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+    }
+    @media (max-width:750px){
+        .swipercollection .swiper-container {
+            overflow: visible;
+        }
+        .swipercollection .container-p{
+          padding-right: 80px;
+        }
+      }
+  </style>
+  
+  <div class="customstyle{{ section.id }} swipercollection swiperco-{{section.id}}  {% if section.settings.stylecollection == 'name' %} collections-name {% endif %}" data-aos="{{section.settings.animation}}" >
+      {%- include 'style-section' -%}
+        <div >
+        <div class="section-block" >
+          <div class="{{ section.settings.setwidth }}">
+            {%- include 'section-heading' -%}
+          </div>
+            <div class="{{ section.settings.setwidth }} .container-p">
+              <div id="swipercol-{{section.id}}" class="collectionlist-wrapper swiper-container swipercol-{{section.id}} {% if section.settings.scrollbar %} swiper-padding {% endif %}" 
+              data-section-id="{{ section.id }}"  
+              data-section-type="swipercollection"
+              data-perview-desktop="{{section.settings.perviewDesktop}}"
+              data-space-between="{{section.settings.spaceBetween}}"
+              >
+                <div class="collectionlist-slider swiper-wrapper" id="collection-list-{{ section.id }}">
+                  {%- for block in section.blocks -%}
+                  <div class="swiper-slide" {{ block.shopify_attributes }}>
+                    {%- assign featured_collection = collections[block.settings.collection] -%}
+                    {%- assign featured_image = block.settings.image -%}
+                      {%- capture current -%}{%- cycle 1, 2, 3, 4, 5, 6 -%}{%- endcapture -%}
+                      {%- assign collectionTitle = featured_collection.title | default: 'Collection title' -%}
+                      <div class="collection-card-3" {{ block.shopify_attributes }}>
+                        <div class="collection-card__image overflow-hidden position-relative image-content__image-container">
+                          <a class="hv-image banner-theme photo-wrapper image-content__image-wrapper {{section.settings.size_image_col}}" href="{{featured_collection.url | default :'#'}}"
+                            {%- if featured_image != blank -%} 
+                              style="padding-top:{{ 1 | divided_by: featured_image.aspect_ratio | times: 100}}%;" 
+                              {%- elsif featured_collection.image != blank -%}
+                              style="padding-top:{{ 1 | divided_by: featured_collection.image.aspect_ratio | times: 100}}%;" 
+                              {%- else -%}
+                              style=""
+                              {%- endif -%}
+                            >
+                            {%- assign img_url = featured_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                            {%- assign f_img_url = featured_collection.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                            {%- if featured_image != blank -%}
+                            <img 
+                                class="lazyload transition" 
+                                src="{%- include 'srcBlank' -%}"
+                                data-srcset="{{ img_url }}"
+                                data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+                                data-aspectratio="{{ featured_image.aspect_ratio }}"
+                                data-sizes="auto"
+                                alt= {{ collectionTitle }}
+                              >
+                              <noscript>
+                                <img class="lazyloaded" src="{{ featured_image | img_url: '900x' }}" alt="{{ collectionTitle }}">
+                              </noscript>
+                            {%- elsif featured_collection.image != blank -%}
+                              <img 
+                                class="lazyload transition" 
+                                src="{%- include 'srcBlank' -%}"
+                                data-srcset="{{ f_img_url }}"
+                                data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+                                data-aspectratio="{{ featured_collection.image.aspect_ratio }}"
+                                data-sizes="auto"
+                                alt= {{ collectionTitle }}>
+                                <noscript>
+                                  <img class="lazyloaded" src="{{ featured_collection.image | img_url: '900x' }}" alt="{{ collectionTitle }}">
+                                </noscript>
+                            {%- else -%}
+                            {{ 'collection-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+                            {%- endif -%}
+                          </a>
+                          {%- liquid
+                            assign stylecol = section.settings.stylecollection
+                          %}
+                          {%- if stylecol == 'nameanditem' -%}
+                          <div class=" position-absolute collection-card__meta w-100 d-flex flex-column h-100 justify-content-center p-4 text-center">
+                            <h4 class="mb-1 title-collection text-white">
+                              <a class="" href="{{featured_collection.url | default :'#'}}">
+                                {{ collectionTitle }}
+                              </a>
+                            </h4>
+                              <p class="text-white">{{ featured_collection.products_count | default: 0 }} {{ featured_collection.products_count | pluralize: 'product', 'products' }}</p> 
+                          </div>
+                          {%- else -%}
+                          <div class=" position-static collection-card__meta w-100 d-flex flex-column h-100 justify-content-center pt-4 underimage text-center">
+                            <h4 class="mb-1 title-collection">
+                              <a class="" href="{{featured_collection.url | default :'#'}}">
+                                {{ collectionTitle }}
+                                <i class="icon-arrow-thin-right ml-2"></i>  
+                              </a>
+                            </h4>
+                              <p class="" style="opacity: 0.8;">{{ featured_collection.products_count | default: 0 }} {{ featured_collection.products_count | pluralize: 'product', 'products' }}</p> 
+                          </div>
+                          {%- endif -%}
+                        </div>
+                      </div>
+                    </div>
+                  {%- endfor -%}
+                  
+                </div>
+  
+                {%- if section.settings.arrows -%}
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+                {%- endif -%}
+                {%- if section.settings.scrollbar -%}
+                <div class="swiper-scrollbar"></div>
+                {%- endif -%}
+              </div>
+              {%- if section.blocks.size == 0 -%}
+              {%- include 'no-blocks' -%}
+              {%- endif -%}
+          </div>
+          </div>
+        </div>
+      </div>
+      
+      {% schema %}
+      {
+        "name": "Collection list Swiper",
+        "class": "index-section",
+        "max_blocks": 12,
+        "settings": [
+        {
+          "type": "select",
+          "id": "animation",
+          "options": [
+            { "value": "", "label": "None"},
+            { "value": "fade", "label": "Fade"},
+            { "value": "fade-up", "label": "Fade Up"},
+            { "value": "fade-down", "label": "Fade Down"},
+            { "value": "fade-left", "label": "Fade Left"},
+            { "value": "fade-right", "label": "Fade Right"},
+            { "value": "fade-up-right", "label": "Fade Up Right"},
+            { "value": "fade-up-left", "label": "Fade Up Left"},
+            { "value": "fade-down-right", "label": "Fade Down Right"},
+            { "value": "fade-down-left", "label": "Fade Down Left"},
+            { "value": "flip-up", "label": "Flip Up"},
+            { "value": "flip-down", "label": "Flip Down"},
+            { "value": "flip-left", "label": "Flip Left"},
+            { "value": "flip-right", "label": "Flip Right"},
+            { "value": "slide-up", "label": "Slide Up"},
+            { "value": "slide-down", "label": "Slide Down"},
+            { "value": "slide-left", "label": "Slide Left"},
+            { "value": "slide-right", "label": "Slide Right"},
+            { "value": "zoom-in", "label": "Zoom In"},
+            { "value": "zoom-in-up", "label": "Zoom In Up"},
+            { "value": "zoom-in-down", "label": "Zoom In Down"},
+            { "value": "zoom-in-left", "label": "Zoom In Left"},
+            { "value": "zoom-in-right", "label": "Zoom In Right"},
+            { "value": "zoom-out", "label": "Zoom Out"},
+            { "value": "zoom-out-up", "label": "Zoom Out Up"},
+            { "value": "zoom-out-down", "label": "Zoom Out Down"},
+            { "value": "zoom-out-left", "label": "Zoom Out Feft"},
+            { "value": "zoom-out-right", "label": "Zoom Out Right"}
+          ],
+          "label": "Select Animation"
+      },
+      {
+        "type": "text",
+        "id": "paddingsection",
+        "label": "Padding Section",
+        "default": "0px 0px 0px 0px",
+        "info": "Padding: Top Right Bottom Left"
+      },
+      {
+        "type": "text",
+        "id": "paddingmobile",
+        "label": "Padding Section Mobile",
+        "default": "60px 0px 60px 0px",
+        "info": "Padding: Top Right Bottom Left"
+      },
+      {
+        "type": "text",
+        "id": "marginsection",
+        "label": "Margin Section",
+        "default": "0px 0px 0px 0px",
+        "info": "Margin: Top Right Bottom Left"
+      },
+      {
+        "type": "text",
+        "id": "marginmobile",
+        "label": "Margin Mobile",
+        "default": "0px 0px 0px 0px",
+        "info": "Margin: Top Right Bottom Left"
+      },
+        {
+          "type": "color",
+          "id": "bgsection",
+            "label": "Background Section",
+            "default": "#fefefe"
+        },
+        {
+          "type": "select",
+          "id": "setwidth",
+          "label": "Full Width",
+          "default": "container",
+          "options": [
+            {
+              "value": "container",
+              "label": "Box"
+            },
+            {
+              "value": "container-fluid",
+              "label": "Container Fluid"
+            },
+            {
+              "value": "full",
+              "label": "Full"
+            }
+          ]
+        },
+        
+        {
+          "type": "text",
+          "id": "title_top",
+          "label": "Sub Title Top",
+          "default": "Sub Title Top"
+        },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "Collection list"
+          },
+          {
+            "type": "textarea",
+            "id": "des",
+            "label": "HTML / Description"
+          },
+          {
+            "type": "header",
+            "content": "Item"
+          },
+          {
+            "type": "select",
+            "id": "stylecollection",
+            "label": "Style Collection",
+            "default": "nameanditem",
+            "options": [
+              {
+                "value": "nameanditem",
+                "label": "On Image"
+              },
+              {
+                "value": "name",
+                "label": "Under Image"
+              }
+            ]
+          },
+          {
+            "type": "select",
+            "id": "size_image_col",
+            "label": "Size Image Collection",
+            "default": "auto",
+            "options": [
+              {
+                "value": "auto",
+                "label": "Natural"
+              },
+              {
+                "value": "square",
+                "label": "Square (1:1)"
+              },
+              {
+                "value": "landscape",
+                "label": "Landscape (4:3)"
+              },
+              {
+                "value": "portrait",
+                "label": "Portrait (2:3)"
+              },
+              {
+                "value": "wide",
+                "label": "Wide (16:9)"
+              }
+            ]
+          },
+          {
+            "type": "color",
+            "id": "bg_overlay",
+            "label": "Background Overlay",
+            "default": "#222222"
+          },
+          {
+            "type": "range",
+            "id": "opacity_overlay",
+            "label": "Opacity Overlay",
+            "max": 1,
+            "min": 0,
+            "step": 0.1,
+            "unit": " op",
+            "default": 0.2
+          },
+          {
+            "type": "range",
+            "id": "perviewDesktop",
+            "label": "Per View Desktop",
+            "max": 6,
+            "min": 1,
+            "step": 1,
+            "unit": " c",
+            "default": 4
+          },
+          {
+            "type": "range",
+            "id": "spaceBetween",
+            "label": "Sapce Between",
+            "max": 40,
+            "min": 0,
+            "step": 1,
+            "unit": " sp",
+            "default": 30
+          },
+          {
+            "type": "checkbox",
+            "id": "nowrap",
+            "label": "Wrap Box",
+            "default": true
+          },
+          {
+            "type": "checkbox",
+            "id": "arrows",
+            "label": "Arrows",
+            "default": true
+          },
+          {
+            "type": "checkbox",
+            "id": "scrollbar",
+            "label": "Scroll Bar",
+            "default": true
+          }
+        ],
+        "blocks": [
+          {
+            "type": "collection",
+            "name": "Collection",
+            "settings": [
+              {
+                "id": "collection",
+                "type": "collection",
+                "label": "Collection"
+              },
+              {
+                "id": "image",
+                "type": "image_picker",
+                "label": "Image"
+              }
+            ]
+          }
+        ],
+        "presets": [
+          {
+            "name": "Collection list Swiper",
+            "category": "Collection",
+            "blocks": [
+              {
+                "type": "collection"
+              },
+              {
+                "type": "collection"
+              },
+              {
+                "type": "collection"
+              }
+            ]
+          }
+        ]
+      }
+      {% endschema %}
+      
