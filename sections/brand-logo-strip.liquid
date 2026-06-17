@@ -1,0 +1,578 @@
+{%- if section.blocks.size > 0 -%}
+{%- assign section_key = 'BrandLogoStrip-' | append: section.id -%}
+{%- assign brand_menu_source = linklists[section.settings.brand_menu_source] -%}
+<div id="{{ section_key }}" class="brand-logo-strip brand-logo-strip--{{ section.id }}">
+  <style>
+    #shopify-section-{{ section.id }} .brand-logo-strip {
+      background: {{ section.settings.background }};
+      {%- if section.settings.show_divider -%}
+      border-top: 1px solid rgba(0, 0, 0, 0.12);
+      {%- else -%}
+      border-top: 0;
+      {%- endif -%}
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__inner {
+      padding: {{ section.settings.padding_y }}px 0 0;
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__tabs {
+      display: grid;
+      grid-template-columns: repeat({{ section.settings.desktop_columns }}, minmax(0, 1fr));
+      gap: {{ section.settings.desktop_gap }}px;
+      align-items: center;
+      justify-items: center;
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__tab {
+      appearance: none;
+      border: 0;
+      background: transparent;
+      padding: 0 0 14px;
+      width: 100%;
+      min-height: {{ section.settings.desktop_row_height }}px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      color: inherit;
+      text-decoration: none;
+      opacity: 0.78;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__tab::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      width: 0;
+      height: 4px;
+      transform: translateX(-50%);
+      background: {{ section.settings.active_underline_color }};
+      transition: width 0.22s ease;
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__tab.is-active::after,
+    #shopify-section-{{ section.id }} .brand-logo-strip__tab:hover::after,
+    #shopify-section-{{ section.id }} .brand-logo-strip__tab:focus-visible::after {
+      width: 100%;
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__tab.is-active,
+    #shopify-section-{{ section.id }} .brand-logo-strip__tab:hover,
+    #shopify-section-{{ section.id }} .brand-logo-strip__tab:focus-visible {
+      opacity: 1;
+      transform: translateY(-1px);
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__image {
+      display: block;
+      width: auto;
+      height: auto;
+      max-width: {{ section.settings.desktop_logo_width }}px;
+      max-height: {{ section.settings.desktop_logo_height }}px;
+      object-fit: contain;
+      object-position: center center;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__tab:hover .brand-logo-strip__image,
+    #shopify-section-{{ section.id }} .brand-logo-strip__tab:focus-visible .brand-logo-strip__image,
+    #shopify-section-{{ section.id }} .brand-logo-strip__tab.is-active .brand-logo-strip__image {
+      transform: translateY(-1px);
+      opacity: 0.94;
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__panel {
+      display: none;
+      background: {{ section.settings.panel_background }};
+      border-top: 1px solid rgba(0, 0, 0, 0.16);
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__panel.is-active {
+      display: block;
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__panel-inner {
+      width: min(100%, 1440px);
+      margin: 0 auto;
+      padding: {{ section.settings.panel_padding_y }}px 24px {{ section.settings.panel_padding_y }}px;
+      box-sizing: border-box;
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__mega-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 28px 36px;
+      align-items: start;
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__column h3 {
+      margin: 0;
+      color: {{ section.settings.panel_title_color }};
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.1;
+      margin-bottom: 14px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__column h3 a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__column h3 a:hover {
+      color: {{ section.settings.active_underline_color }};
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__column ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      font-size: 14px;
+      line-height: 1.55;
+      color: rgba(0, 0, 0, 0.74);
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__column li + li {
+      margin-top: 10px;
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__column a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.18s ease, opacity 0.18s ease;
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__column a:hover {
+      color: {{ section.settings.active_underline_color }};
+    }
+
+    @media (max-width: 989px) {
+      #shopify-section-{{ section.id }} .brand-logo-strip__inner {
+        padding-top: {{ section.settings.mobile_padding_y }}px;
+      }
+
+      #shopify-section-{{ section.id }} .brand-logo-strip__tabs {
+        grid-template-columns: repeat({{ section.settings.mobile_columns }}, minmax(0, 1fr));
+        gap: {{ section.settings.mobile_gap }}px;
+      }
+
+      #shopify-section-{{ section.id }} .brand-logo-strip__tab {
+        min-height: {{ section.settings.mobile_row_height }}px;
+        padding-bottom: 10px;
+      }
+
+      #shopify-section-{{ section.id }} .brand-logo-strip__image {
+        max-width: {{ section.settings.mobile_logo_width }}px;
+        max-height: {{ section.settings.mobile_logo_height }}px;
+      }
+
+      #shopify-section-{{ section.id }} .brand-logo-strip__panel-inner {
+        width: 100%;
+        padding: {{ section.settings.mobile_panel_padding_y }}px 16px {{ section.settings.mobile_panel_padding_y }}px;
+      }
+
+      #shopify-section-{{ section.id }} .brand-logo-strip__mega-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      #shopify-section-{{ section.id }} .brand-logo-strip__column h3 {
+        font-size: 15px;
+        margin-bottom: 10px;
+        padding-bottom: 8px;
+      }
+
+      #shopify-section-{{ section.id }} .brand-logo-strip__column ul {
+        font-size: 13px;
+      }
+    }
+  </style>
+
+  <div class="{{ section.settings.setwidth }} brand-logo-strip__inner">
+    <div class="brand-logo-strip__tabs" role="tablist" aria-label="{{ section.settings.aria_label | escape }}">
+      {%- for block in section.blocks -%}
+        {%- if block.settings.brand_link != blank -%}
+          <a
+            href="{{ block.settings.brand_link }}"
+            class="brand-logo-strip__tab{% if forloop.first %} is-active{% endif %}"
+            data-brand-tab="{{ block.id }}"
+            aria-controls="BrandLogoStripPanel-{{ section.id }}-{{ block.id }}"
+            aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+            {{ block.shopify_attributes }}>
+        {%- else -%}
+          <button
+            type="button"
+            class="brand-logo-strip__tab{% if forloop.first %} is-active{% endif %}"
+            data-brand-tab="{{ block.id }}"
+            aria-controls="BrandLogoStripPanel-{{ section.id }}-{{ block.id }}"
+            aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+            {{ block.shopify_attributes }}>
+        {%- endif -%}
+          {%- if block.settings.image != blank -%}
+            <img
+              class="brand-logo-strip__image"
+              src="{{ block.settings.image | img_url: '800x' }}"
+              srcset="{{ block.settings.image | img_url: '800x' }} 1x, {{ block.settings.image | img_url: '1200x' }} 2x"
+              alt="{{ block.settings.image.alt | default: block.settings.title | escape }}">
+          {%- else -%}
+            <span>{{ block.settings.title | escape }}</span>
+          {%- endif -%}
+        {%- if block.settings.brand_link != blank -%}
+          </a>
+        {%- else -%}
+          </button>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    <div class="brand-logo-strip__panels">
+      {%- for block in section.blocks -%}
+        {%- assign brand_handle = block.settings.title | strip | split: '[' | first | strip | handleize -%}
+        {%- assign brand_menu_item = blank -%}
+        {%- assign brand_columns_source = blank -%}
+
+        {%- if brand_menu_source != blank and brand_menu_source.links.size > 0 -%}
+          {%- for menu_item in brand_menu_source.links -%}
+            {%- assign menu_item_handle = menu_item.title | strip | split: '[' | first | strip | handleize -%}
+            {%- if menu_item_handle == brand_handle -%}
+              {%- assign brand_menu_item = menu_item -%}
+              {%- break -%}
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endif -%}
+
+        {%- if brand_menu_item != blank and brand_menu_item.links.size > 0 -%}
+          {%- assign brand_columns_source = brand_menu_item -%}
+        {%- elsif block.settings.submenu_menu != blank -%}
+          {%- assign brand_columns_source = linklists[block.settings.submenu_menu] -%}
+        {%- endif -%}
+
+        <section
+          id="BrandLogoStripPanel-{{ section.id }}-{{ block.id }}"
+          class="brand-logo-strip__panel{% if forloop.first %} is-active{% endif %}"
+          data-brand-panel="{{ block.id }}"
+          role="tabpanel"
+          aria-hidden="{% if forloop.first %}false{% else %}true{% endif %}">
+          <div class="brand-logo-strip__panel-inner">
+            {%- if brand_columns_source != blank and brand_columns_source.links.size > 0 -%}
+              <div class="brand-logo-strip__mega-grid">
+                {%- for column_link in brand_columns_source.links -%}
+                  <div class="brand-logo-strip__column">
+                    <h3>
+                      <a href="{{ column_link.url }}">{{ column_link.title }}</a>
+                    </h3>
+                    {%- if column_link.links.size > 0 -%}
+                      <ul>
+                        {%- for item_link in column_link.links -%}
+                          <li>
+                            <a href="{{ item_link.url }}">{{ item_link.title }}</a>
+                          </li>
+                        {%- endfor -%}
+                      </ul>
+                    {%- else -%}
+                      <ul>
+                        <li>
+                          <a href="{{ column_link.url }}">{{ column_link.title }}</a>
+                        </li>
+                      </ul>
+                    {%- endif -%}
+                  </div>
+                {%- endfor -%}
+              </div>
+            {%- elsif block.settings.content_html != blank -%}
+              <div class="brand-logo-strip__column">
+                {{ block.settings.content_html }}
+              </div>
+            {%- endif -%}
+          </div>
+        </section>
+      {%- endfor -%}
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var root = document.getElementById('{{ section_key }}');
+      if (!root) return;
+
+      function activateBrand(id) {
+        var brandTabs = root.querySelectorAll('[data-brand-tab]');
+        var brandPanels = root.querySelectorAll('[data-brand-panel]');
+
+        brandTabs.forEach(function (tab) {
+          var active = tab.getAttribute('data-brand-tab') === id;
+          tab.classList.toggle('is-active', active);
+          tab.setAttribute('aria-selected', active ? 'true' : 'false');
+        });
+
+        brandPanels.forEach(function (panel) {
+          var active = panel.getAttribute('data-brand-panel') === id;
+          panel.classList.toggle('is-active', active);
+          panel.setAttribute('aria-hidden', active ? 'false' : 'true');
+        });
+      }
+
+      root.querySelectorAll('[data-brand-tab]').forEach(function (tab) {
+        tab.addEventListener('click', function () {
+          activateBrand(tab.getAttribute('data-brand-tab'));
+        });
+        tab.addEventListener('mouseenter', function () {
+          activateBrand(tab.getAttribute('data-brand-tab'));
+        });
+        tab.addEventListener('focus', function () {
+          activateBrand(tab.getAttribute('data-brand-tab'));
+        });
+      });
+
+      var firstBrand = root.querySelector('[data-brand-tab]');
+      if (firstBrand) {
+        activateBrand(firstBrand.getAttribute('data-brand-tab'));
+      }
+    })();
+  </script>
+</div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Brand Logo Strip",
+  "class": "index-section brand-logo-strip-section",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "select",
+      "id": "setwidth",
+      "label": "Width",
+      "default": "container-fluid",
+      "options": [
+        { "value": "container", "label": "Box" },
+        { "value": "container-fluid", "label": "Container Fluid" },
+        { "value": "full", "label": "Full" }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "aria_label",
+      "label": "Tab label",
+      "default": "Brand navigation"
+    },
+    {
+      "type": "link_list",
+      "id": "brand_menu_source",
+      "label": "Brand menu source",
+      "info": "Top-level menu items should match the brand title. Their child links become the submenu.",
+      "default": "main-menu"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "panel_background",
+      "label": "Panel background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "panel_text",
+      "label": "Panel text",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "panel_title_color",
+      "label": "Panel title",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "active_underline_color",
+      "label": "Active underline",
+      "default": "#d11f2a"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_divider",
+      "label": "Show top divider",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "padding_y",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "label": "Desktop top padding",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_y",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "label": "Mobile top padding",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "desktop_columns",
+      "min": 3,
+      "max": 6,
+      "step": 1,
+      "label": "Desktop columns",
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "mobile_columns",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "label": "Mobile columns",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "desktop_gap",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "label": "Desktop gap",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "mobile_gap",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "label": "Mobile gap",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "desktop_row_height",
+      "min": 60,
+      "max": 120,
+      "step": 1,
+      "label": "Desktop logo row height",
+      "default": 90
+    },
+    {
+      "type": "range",
+      "id": "mobile_row_height",
+      "min": 40,
+      "max": 90,
+      "step": 1,
+      "label": "Mobile logo row height",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "desktop_logo_height",
+      "min": 24,
+      "max": 120,
+      "step": 1,
+      "label": "Desktop logo height",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "desktop_logo_width",
+      "min": 80,
+      "max": 400,
+      "step": 4,
+      "label": "Desktop logo width",
+      "default": 260
+    },
+    {
+      "type": "range",
+      "id": "mobile_logo_height",
+      "min": 20,
+      "max": 80,
+      "step": 1,
+      "label": "Mobile logo height",
+      "default": 46
+    },
+    {
+      "type": "range",
+      "id": "mobile_logo_width",
+      "min": 60,
+      "max": 240,
+      "step": 4,
+      "label": "Mobile logo width",
+      "default": 148
+    },
+    {
+      "type": "range",
+      "id": "panel_padding_y",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "label": "Desktop panel padding",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "mobile_panel_padding_y",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "label": "Mobile panel padding",
+      "default": 20
+    }
+  ],
+  "blocks": [
+    {
+      "type": "brand",
+      "name": "Brand",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Brand title",
+          "default": "Brand"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Brand logo"
+        },
+        {
+          "type": "url",
+          "id": "brand_link",
+          "label": "Brand link",
+          "info": "Used for the clickable brand logo."
+        },
+        {
+          "type": "link_list",
+          "id": "submenu_menu",
+          "label": "Fallback submenu menu",
+          "info": "Used only if no matching brand is found in the selected brand menu."
+        },
+        {
+          "type": "textarea",
+          "id": "content_html",
+          "label": "Fallback HTML"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brand Logo Strip",
+      "category": "Header"
+    }
+  ]
+}
+{% endschema %}
