@@ -1232,6 +1232,10 @@ window.QtySelector = (function() {
       theme.Currency.formatMoney(cart.total_price, theme.moneyFormat)
     );
 
+    // Keep visible cart item counts in sync after quantity changes.
+    $('.js-cart-item-count').text(cart.item_count);
+    $('.js-cart-item-label').text(cart.item_count === 1 ? 'item' : 'items');
+
     // Update the cart total discounts
     if (cart.total_discount > 0) {
       this.cache.$discountTotal.html(
@@ -4209,12 +4213,66 @@ theme.wishlist = (function (){
   var wishlistButtonClass = '.js-btn-wishlist',
       wishlistRemoveButtonClass = '.js-remove-wishlist',
       $wishlistCount = $('.js-wishlist-count'),
+      $wishlistPageCount = $('.js-wishlist-page-count'),
       $wishlistContainer = $('.js-wishlist-content'),
       wishlistObject = JSON.parse(localStorage.getItem('localWishlist')) || [],
-      wishlistPageUrl = $('.js-wishlist-link').attr('href'),
+      wishlistPageUrl = $('.js-wishlist-link').attr('href') || '/pages/wishlist',
+      wishlistRenderToken = 0,
       loadNoResult = function (){
-        $wishlistContainer.html('<div class="col text-center"><div class="alert alert-warning d-inline-block">'+ theme.strings.wishlistNoResult + '</div></div>');
+        $wishlistContainer.html(
+          '<div class="col-12">' +
+            '<div class="wishlist-empty">' +
+              '<div class="wishlist-empty__icon">' + theme.strings.wishlistIcon + '</div>' +
+              '<h2 class="wishlist-empty__title">' + theme.strings.wishlistNoResult + '</h2>' +
+              '<p class="wishlist-empty__text">Save products while browsing, then come back here to compare and continue shopping faster.</p>' +
+              '<div class="wishlist-empty__actions">' +
+                '<a href="/collections/all" class="btn btn-theme gradient-theme-vertical">Continue shopping</a>' +
+              '</div>' +
+            '</div>' +
+          '</div>'
+        );
       };
+
+  function escapeHtml(value) {
+    return $('<div>').text(value == null ? '' : String(value)).html();
+  }
+
+  function buildWishlistCard(product) {
+    var productTitle = escapeHtml(product.title || ''),
+        productPrice = product.price_varies ? 'from ' + theme.Currency.formatMoney(product.price_min, theme.moneyFormat) : theme.Currency.formatMoney(product.price, theme.moneyFormat),
+        productComparePrice = product.compare_at_price_min !== 0 ? theme.Currency.formatMoney(product.compare_at_price_min, theme.moneyFormat) : '',
+        productImage = product.featured_image || '';
+
+    return [
+      '<div class="js-wishlist-item wishlist-page__item">',
+        '<article class="wishlist-card">',
+          '<div class="wishlist-card__media">',
+            '<a class="wishlist-card__image" href="' + product.url + '">',
+              (productImage ? '<img src="' + productImage + '" alt="' + productTitle + '">' : '<span class="wishlist-card__placeholder"></span>'),
+            '</a>',
+            '<button type="button" class="js-remove-wishlist wishlist-card__remove" data-handle="' + product.handle + '" aria-label="' + theme.strings.wishlistRemove + '">',
+              '<svg aria-hidden="true" focusable="false" role="presentation" width="18" height="18" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">',
+                '<path d="M8.48627 9.32917L2.82849 3.67098" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>',
+                '<path d="M2.88539 9.38504L8.42932 3.61524" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>',
+              '</svg>',
+            '</button>',
+          '</div>',
+          '<div class="wishlist-card__body">',
+            '<div class="wishlist-card__meta">',
+              '<a href="' + product.url + '" class="wishlist-card__title">' + productTitle + '</a>',
+              '<div class="wishlist-card__price">',
+                '<span>' + productPrice + '</span>',
+                (productComparePrice ? '<s>' + productComparePrice + '</s>' : ''),
+              '</div>',
+            '</div>',
+            '<div class="wishlist-card__actions">',
+              '<a href="' + product.url + '" class="wishlist-card__view">View product</a>',
+            '</div>',
+          '</div>',
+        '</article>',
+      '</div>'
+    ].join('');
+  }
 
   function updateWishlist(self) {
     var productHandle = $(self).data('handle'),
@@ -4234,30 +4292,30 @@ theme.wishlist = (function (){
     $wishlistCount.text(wishlistObject.length);
   };
   function loadWishlist(){
+    var renderToken = ++wishlistRenderToken,
+        renderedItems = new Array(wishlistObject.length),
+        loadedItems = 0;
+
     $wishlistContainer.html('');
     //page wishlist
     if (wishlistObject.length > 0){
       for (var i = 0; i < wishlistObject.length; i++) { 
         var productHandle = wishlistObject[i];
         Shopify.getProduct(productHandle,function(product){
-          var htmlProduct = '';
-          var productPrice = product.price_varies? 'from ' + theme.Currency.formatMoney(product.price_min, theme.moneyFormat) : theme.Currency.formatMoney(product.price, theme.moneyFormat);
-          var productComparePrice = product.compare_at_price_min !== 0? theme.Currency.formatMoney(product.compare_at_price_min, theme.moneyFormat) : '';
-          htmlProduct += '<div class="js-wishlist-item col-md-4 col-sm-6 col-xs-6 col-12 mb-4">';
-          htmlProduct += '<div class="js-wishlist-itembox">';
-          htmlProduct += '<div class=" d-flex flex-row p-4">';
-          htmlProduct += '	<a class="d-inline-block mr-4 " href="'+ product.url +'">';
-          htmlProduct += '		<img src="'+ product.featured_image +'"/>';
-          htmlProduct += '	</a>';
-          htmlProduct += '	<div><a href="'+ product.url +'" class="title-prouct d-block h5 text-body" >'+ product.title +'</a>';
-          htmlProduct += '	<span> '+ productPrice +'</span>';
-          htmlProduct += '	 <s>'+ productComparePrice +'</s></div>';
-          htmlProduct += '<button class="btn js-remove-wishlist" data-handle="'+product.handle+'">'+ theme.strings.wishlistRemove +'</button>';
-          htmlProduct += '</div>';
-          htmlProduct += '</div>';
-          htmlProduct += '</div>';
-          $wishlistContainer.append(htmlProduct); 
-          theme.updateCurrencies();
+          if (renderToken !== wishlistRenderToken) {
+            return;
+          }
+
+          renderedItems[i] = buildWishlistCard(product);
+          loadedItems += 1;
+
+          if (loadedItems === wishlistObject.length) {
+            $wishlistContainer.html(renderedItems.join(''));
+
+            if (theme.updateCurrencies) {
+              theme.updateCurrencies();
+            }
+          }
         });
       }
     }else{
@@ -4266,6 +4324,7 @@ theme.wishlist = (function (){
 
     //count items
     $wishlistCount.text(wishlistObject.length);
+    $wishlistPageCount.text(wishlistObject.length);
 
     //button text
     $(wishlistButtonClass).each(function(){
@@ -4292,13 +4351,7 @@ theme.wishlist = (function (){
     //update Object
     wishlistObject.splice(wishlistObject.indexOf(productHandle), 1);
     localStorage.setItem('localWishlist', JSON.stringify(wishlistObject)); 
-    // Remove element
-    $(this).closest('.js-wishlist-item').fadeOut(); // or .remove()
-    //count
-    $wishlistCount.text(wishlistObject.length);
-    if (wishlistObject.length === 0) {
-      loadNoResult();
-    }
+    loadWishlist();
   });
 
   loadWishlist();
