@@ -4902,6 +4902,62 @@ $slick-opacity-not-active: 0.25;
   }
 }
 
+.product-card--style5{
+  .product-label{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    max-width: calc(100% - 20px);
+    pointer-events: none;
+  }
+  .product-label .product-tag{
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  @media (max-width:991px){
+    .product-card__image-wr{
+      overflow: hidden;
+    }
+    .product-label{
+      top: 10px;
+      left: 10px;
+      right: auto;
+      z-index: 20;
+      opacity: 1;
+      visibility: visible;
+    }
+    .product-label .product-tag{
+      display: inline-flex;
+      align-items: center;
+      line-height: 1.2;
+      font-size: 11px;
+      padding: 3px 8px;
+    }
+    .product-card__overlaytop{
+      z-index: 15;
+    }
+  }
+}
+
+.productlist-slider{
+  .product-card--style5{
+    @media (max-width:991px){
+      .product-label{
+        top: 8px !important;
+        left: 8px !important;
+        right: auto !important;
+        z-index: 30 !important;
+      }
+      .product-label .product-tag{
+        display: inline-flex !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+      }
+    }
+  }
+}
+
 /*============================================================================
   Pagination
   - Markup build by liquid tag,

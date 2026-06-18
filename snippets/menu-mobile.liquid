@@ -1,3 +1,27 @@
+<style>
+  #NavDrawer .drawer__nav-has-sublist,
+  #NavDrawer .drawer__nav-link--top-level,
+  #NavDrawer .drawer__nav-link--split {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+  }
+
+  #NavDrawer .drawer__nav-link--top-level,
+  #NavDrawer .drawer__nav-link--split {
+    gap: 6px;
+  }
+
+  #NavDrawer .menu-label {
+    position: static;
+    display: inline-flex;
+    align-items: center;
+    flex: 0 0 auto;
+    margin-top: 0;
+    white-space: nowrap;
+  }
+</style>
+
 <div id="NavDrawer" class="drawer drawer--left">
   <div class="drawer__inner">
     <form action="/search" method="get" class="drawer__search mt-3 form-group" role="search">
