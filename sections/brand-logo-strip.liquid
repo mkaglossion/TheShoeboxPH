@@ -176,9 +176,9 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 14px;
+      gap: 10px;
       width: 100%;
-      padding: 14px 16px;
+      padding: 10px 14px;
       box-sizing: border-box;
       color: inherit;
     }
@@ -187,7 +187,7 @@
       display: inline-flex;
       align-items: center;
       min-width: 0;
-      gap: 10px;
+      gap: 8px;
     }
 
     #shopify-section-{{ section.id }} .brand-logo-strip__mobile-brand-link {
@@ -203,8 +203,8 @@
       appearance: none;
       border: 0;
       background: transparent;
-      padding: 8px;
-      margin: -8px -4px -8px 0;
+      padding: 6px;
+      margin: -6px -2px -6px 0;
       color: inherit;
       display: inline-flex;
       align-items: center;
@@ -217,13 +217,13 @@
       display: block;
       width: auto;
       height: auto;
-      max-width: 120px;
-      max-height: 30px;
+      max-width: {{ section.settings.mobile_logo_width }}px;
+      max-height: {{ section.settings.mobile_logo_height }}px;
       object-fit: contain;
     }
 
     #shopify-section-{{ section.id }} .brand-logo-strip__mobile-title {
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 600;
       line-height: 1.2;
       color: {{ section.settings.panel_title_color }};
@@ -259,7 +259,7 @@
     }
 
     #shopify-section-{{ section.id }} .brand-logo-strip__mobile-panel {
-      padding: 0 16px 16px;
+      padding: 0 14px 12px;
       background: {{ section.settings.panel_background }};
     }
 
@@ -277,7 +277,7 @@
       align-items: center;
       gap: 12px;
       width: 100%;
-      padding: 10px 0 8px;
+      padding: 6px 0 5px;
     }
 
     #shopify-section-{{ section.id }} .brand-logo-strip__mobile-column-link {
@@ -287,10 +287,10 @@
       align-items: center;
       color: {{ section.settings.panel_title_color }} !important;
       text-decoration: none;
-      font-size: 16px;
+      font-size: 14px;
       font-weight: 700;
       line-height: 1.25;
-      padding: 4px 0;
+      padding: 2px 0;
       transition: color 0.18s ease, opacity 0.18s ease;
       -webkit-tap-highlight-color: transparent;
     }
@@ -305,8 +305,8 @@
       appearance: none;
       border: 0;
       background: transparent;
-      padding: 8px;
-      margin: -8px 0 -8px auto;
+      padding: 5px;
+      margin: -5px 0 -5px auto;
       color: inherit;
       display: inline-flex;
       align-items: center;
@@ -318,8 +318,8 @@
     #shopify-section-{{ section.id }} .brand-logo-strip__mobile-column-caret {
       flex: 0 0 auto;
       color: rgba(0, 0, 0, 0.55);
-      width: 8px;
-      height: 8px;
+      width: 7px;
+      height: 7px;
       line-height: 1;
       border-top: 2px solid currentColor;
       border-right: 2px solid currentColor;
@@ -406,11 +406,6 @@
         background: {{ section.settings.panel_background }};
       }
 
-      #shopify-section-{{ section.id }} .brand-logo-strip__tabs {
-        grid-template-columns: repeat({{ section.settings.mobile_columns }}, minmax(0, 1fr));
-        gap: {{ section.settings.mobile_gap }}px;
-      }
-
       #shopify-section-{{ section.id }} .brand-logo-strip__tab {
         min-height: {{ section.settings.mobile_row_height }}px;
         padding-bottom: 10px;
@@ -424,6 +419,11 @@
       #shopify-section-{{ section.id }} .brand-logo-strip__panel-inner {
         width: 100%;
         padding: {{ section.settings.mobile_panel_padding_y }}px 16px {{ section.settings.mobile_panel_padding_y }}px;
+      }
+
+      #shopify-section-{{ section.id }} .brand-logo-strip__mobile-columns {
+        grid-template-columns: repeat({{ section.settings.mobile_columns }}, minmax(0, 1fr));
+        gap: {{ section.settings.mobile_gap }}px;
       }
 
       #shopify-section-{{ section.id }} .brand-logo-strip__mega-grid {
@@ -958,11 +958,11 @@
     {
       "type": "range",
       "id": "mobile_columns",
-      "min": 2,
+      "min": 1,
       "max": 4,
       "step": 1,
       "label": "Mobile columns",
-      "default": 3
+      "default": 1
     },
     {
       "type": "range",
@@ -1025,7 +1025,7 @@
       "max": 80,
       "step": 1,
       "label": "Mobile logo height",
-      "default": 46
+      "default": 56
     },
     {
       "type": "range",
@@ -1034,7 +1034,7 @@
       "max": 240,
       "step": 4,
       "label": "Mobile logo width",
-      "default": 148
+      "default": 180
     },
     {
       "type": "range",
