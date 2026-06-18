@@ -3898,6 +3898,43 @@
           "panel_padding_y": 28,
           "mobile_panel_padding_y": 20
         }
+      },
+      "swiper_banner_TGdzL6": {
+        "type": "swiper-banner",
+        "blocks": {
+          "banner_slide_DbXgVB": {
+            "type": "banner_slide",
+            "settings": {
+              "desktop_image": "shopify://shop_images/Charge_Sneakers_Banner_2_76290051-6406-4181-b0ab-a354a103ce6f.jpg",
+              "mobile_image": "shopify://shop_images/Artboard_3.jpg",
+              "link": "shopify://collections/charge-sneaker-womens-shoes",
+              "open_new_tab": false,
+              "alt_text": ""
+            }
+          }
+        },
+        "block_order": [
+          "banner_slide_DbXgVB"
+        ],
+        "name": "Swiper banner",
+        "settings": {
+          "animation": "",
+          "paddingsection": "0px 0px 0px 0px",
+          "paddingmobile": "0px 0px 0px 0px",
+          "marginsection": "0px 0px 0px 0px",
+          "marginmobile": "0px 0px 0px 0px",
+          "bgsection": "#ffffff",
+          "setwidth": "full",
+          "title": "Swiper banner",
+          "des": "",
+          "autoplay": true,
+          "delay": 3000,
+          "speed": 700,
+          "loop": true,
+          "dots": true,
+          "arrows": false,
+          "pause_on_hover": true
+        }
       }
     },
     "content_for_index": [
@@ -3918,7 +3955,8 @@
       "grid_banner_7iNrh3",
       "product_list_WwrW86",
       "advanced_content_4HWi3D",
-      "advanced_content_fFUqUX"
+      "advanced_content_fFUqUX",
+      "swiper_banner_TGdzL6"
     ]
   },
   "presets": {
