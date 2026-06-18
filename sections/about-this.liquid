@@ -1,0 +1,532 @@
+{%- if section.blocks.size > 0 -%}
+<section class="about-this about-this--{{ section.id }}">
+  <style>
+    #shopify-section-{{ section.id }} .about-this {
+      background: {{ section.settings.background }};
+      color: {{ section.settings.text_color }};
+      border-top: 1px solid {{ section.settings.border_color }};
+    }
+
+    #shopify-section-{{ section.id }} .about-this__inner {
+      padding: {{ section.settings.padding_top_desktop }}px 0 {{ section.settings.padding_bottom_desktop }}px;
+    }
+
+    #shopify-section-{{ section.id }} .about-this__layout {
+      display: grid;
+      grid-template-columns: minmax(260px, 0.95fr) minmax(0, 2.2fr);
+      gap: {{ section.settings.desktop_gap }}px;
+      align-items: start;
+    }
+
+    #shopify-section-{{ section.id }} .about-this__brand {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+    }
+
+    #shopify-section-{{ section.id }} .about-this__logo-link {
+      display: inline-flex;
+      max-width: 100%;
+      text-decoration: none;
+    }
+
+    #shopify-section-{{ section.id }} .about-this__logo {
+      display: block;
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      object-position: left center;
+    }
+
+    #shopify-section-{{ section.id }} .about-this__tagline {
+      margin-top: 10px;
+      font-size: 14px;
+      line-height: 1.5;
+      font-family: var(--g-font-2);
+      color: #6f6f6f;
+    }
+
+    #shopify-section-{{ section.id }} .about-this__socials {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 10px;
+      padding: 0;
+      list-style: none;
+    }
+
+    #shopify-section-{{ section.id }} .about-this__socials a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      background: #2b2b2b;
+      color: #fff;
+      text-decoration: none;
+      transition: background-color 0.2s ease, transform 0.2s ease, color 0.2s ease;
+      will-change: transform;
+      transform-origin: center;
+    }
+
+    #shopify-section-{{ section.id }} .about-this__socials a:hover,
+    #shopify-section-{{ section.id }} .about-this__socials a:focus-visible {
+      background: {{ section.settings.accent_color }};
+      color: #fff;
+      transform: scale(1.08);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+    }
+
+    #shopify-section-{{ section.id }} .about-this__socials a:active {
+      transform: scale(1.02);
+    }
+
+    #shopify-section-{{ section.id }} .about-this__socials .icon {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+
+    #shopify-section-{{ section.id }} .about-this__socials svg {
+      display: block;
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+
+    #shopify-section-{{ section.id }} .about-this__content-grid {
+      display: grid;
+      grid-template-columns:
+        minmax(150px, 0.92fr)
+        minmax(300px, 1.25fr)
+        minmax(170px, 0.88fr);
+      column-gap: {{ section.settings.desktop_inner_gap }}px;
+      row-gap: 14px;
+      align-items: start;
+      width: min(100%, 920px);
+      margin-inline: auto;
+    }
+
+    #shopify-section-{{ section.id }} .about-this__column {
+      min-width: 0;
+    }
+
+    #shopify-section-{{ section.id }} .about-this__column-title {
+      margin: 0 0 12px;
+      padding-bottom: 8px;
+      position: relative;
+      font-family: "Interstate Black Cond", sans-serif !important;
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      line-height: 1.15;
+      text-transform: none;
+      color: {{ section.settings.title_color }};
+    }
+
+    #shopify-section-{{ section.id }} .about-this__column-title::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 46px;
+      height: 2px;
+      background: {{ section.settings.accent_color }};
+    }
+
+    #shopify-section-{{ section.id }} .about-this__column-content {
+      font-family: var(--g-font-2);
+      font-size: 15px;
+      line-height: 1.9;
+      color: rgba(0, 0, 0, 0.72);
+    }
+
+    #shopify-section-{{ section.id }} .about-this__column-content p {
+      margin: 0 0 10px;
+    }
+
+    #shopify-section-{{ section.id }} .about-this__column-content p:last-child {
+      margin-bottom: 0;
+    }
+
+    #shopify-section-{{ section.id }} .about-this__column-content a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    #shopify-section-{{ section.id }} .about-this__column-content a:hover,
+    #shopify-section-{{ section.id }} .about-this__column-content a:focus-visible {
+      color: {{ section.settings.accent_color }};
+    }
+
+    @media (max-width: 749px) {
+      #shopify-section-{{ section.id }} .about-this__inner {
+        padding: {{ section.settings.padding_top_mobile }}px 0 {{ section.settings.padding_bottom_mobile }}px;
+      }
+
+      #shopify-section-{{ section.id }} .about-this__layout {
+        grid-template-columns: 1fr;
+        gap: {{ section.settings.mobile_gap }}px;
+      }
+
+      #shopify-section-{{ section.id }} .about-this__brand {
+        align-items: center;
+        text-align: center;
+      }
+
+      #shopify-section-{{ section.id }} .about-this__logo-link {
+        margin-inline: auto;
+      }
+
+      #shopify-section-{{ section.id }} .about-this__logo {
+        margin-inline: auto;
+        object-position: center center;
+      }
+
+      #shopify-section-{{ section.id }} .about-this__socials {
+        justify-content: center;
+      }
+
+      #shopify-section-{{ section.id }} .about-this__content-grid {
+        grid-template-columns: 1fr;
+        gap: {{ section.settings.mobile_inner_gap }}px;
+      }
+
+      #shopify-section-{{ section.id }} .about-this__column-title {
+        font-size: 14px;
+        margin-bottom: 10px;
+        letter-spacing: 0.02em;
+      }
+
+      #shopify-section-{{ section.id }} .about-this__column-title::after {
+        width: 42px;
+      }
+    }
+  </style>
+
+  <div class="{{ section.settings.setwidth }} about-this__inner">
+    <div class="about-this__layout">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'brand' -%}
+          <div class="about-this__brand" {{ block.shopify_attributes }}>
+            {%- if block.settings.logo != blank -%}
+              {%- if block.settings.logo_link != blank -%}
+                <a class="about-this__logo-link" href="{{ block.settings.logo_link }}">
+              {%- endif -%}
+              <img
+                class="about-this__logo lazyload"
+                src="{%- include 'srcBlank' -%}"
+                data-src="{{ block.settings.logo | img_url: '500x' }}"
+                alt="{{ block.settings.logo.alt | default: shop.name | escape }}"
+                style="width: {{ block.settings.logo_width }}px; max-width: 100%; height: auto; max-height: {{ block.settings.logo_height }}px;"
+              >
+              {%- if block.settings.logo_link != blank -%}
+                </a>
+              {%- endif -%}
+            {%- endif -%}
+
+            {%- if block.settings.tagline != blank -%}
+              <div class="about-this__tagline rte">
+                {{ block.settings.tagline }}
+              </div>
+            {%- endif -%}
+
+            {%- if block.settings.show_social -%}
+              <ul class="about-this__socials list-unstyled">
+                {%- assign brand_facebook_url = block.settings.social_facebook_url | default: settings.social_facebook_link -%}
+                {%- assign brand_instagram_url = block.settings.social_instagram_url | default: settings.social_instagram_link -%}
+                {%- assign brand_tiktok_url = block.settings.social_tiktok_url -%}
+                {%- if brand_facebook_url != blank -%}
+                  <li class="list-inline-item">
+                    <a href="{{ brand_facebook_url }}" aria-label="Facebook" target="_blank" rel="noopener">
+                      {%- include 'icon-facebook' -%}
+                    </a>
+                  </li>
+                {%- endif -%}
+                {%- if brand_instagram_url != blank -%}
+                  <li class="list-inline-item">
+                    <a href="{{ brand_instagram_url }}" aria-label="Instagram" target="_blank" rel="noopener">
+                      {%- include 'icon-instagram' -%}
+                    </a>
+                  </li>
+                {%- endif -%}
+                {%- if brand_tiktok_url != blank -%}
+                  <li class="list-inline-item">
+                    <a href="{{ brand_tiktok_url }}" aria-label="TikTok" target="_blank" rel="noopener">
+                      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        <path fill="currentColor" d="M16.7 3.5c.7 1.1 1.8 1.9 3 2.2v3.2c-1.3 0-2.6-.4-3.7-1v5.9c0 3.7-3 6.7-6.7 6.7-1.8 0-3.5-.7-4.8-2 2.1.2 4-1.1 4.7-3 .2-.6.3-1.2.3-1.8V8.3h3.2c.1.8.5 1.6 1 2.2.5.6 1.2 1 2 1.2V8.8c-.4-.1-.8-.3-1.1-.5-.6-.4-1.1-.9-1.4-1.6-.3-.6-.5-1.3-.5-2V3.5z"/>
+                      </svg>
+                    </a>
+                  </li>
+                {%- endif -%}
+              </ul>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+
+      <div class="about-this__content-grid">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'column' -%}
+            <div class="about-this__column" {{ block.shopify_attributes }}>
+              {%- if block.settings.title != blank -%}
+                <h3 class="about-this__column-title">{{ block.settings.title | escape }}</h3>
+              {%- endif -%}
+              {%- if block.settings.content != blank -%}
+                <div class="about-this__column-content rte">
+                  {{ block.settings.content }}
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "About This",
+  "class": "index-section about-this-section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "setwidth",
+      "label": "Width",
+      "default": "container",
+      "options": [
+        { "value": "container", "label": "Box" },
+        { "value": "container-fluid", "label": "Container Fluid" },
+        { "value": "full", "label": "Full" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent",
+      "default": "#d11f2a"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border",
+      "default": "#e7e7e7"
+    },
+    {
+      "type": "range",
+      "id": "desktop_gap",
+      "label": "Desktop outer gap",
+      "min": 12,
+      "max": 80,
+      "step": 1,
+      "default": 42
+    },
+    {
+      "type": "range",
+      "id": "desktop_inner_gap",
+      "label": "Desktop column gap",
+      "min": 12,
+      "max": 48,
+      "step": 1,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "mobile_gap",
+      "label": "Mobile outer gap",
+      "min": 12,
+      "max": 48,
+      "step": 1,
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "mobile_inner_gap",
+      "label": "Mobile column gap",
+      "min": 12,
+      "max": 36,
+      "step": 1,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Desktop top padding",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Desktop bottom padding",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Mobile top padding",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Mobile bottom padding",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "default": 24
+    }
+  ],
+  "blocks": [
+    {
+      "type": "brand",
+      "name": "Brand",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Logo"
+        },
+        {
+          "type": "range",
+          "id": "logo_width",
+          "label": "Logo width",
+          "min": 100,
+          "max": 360,
+          "step": 4,
+          "default": 280
+        },
+        {
+          "type": "range",
+          "id": "logo_height",
+          "label": "Logo height",
+          "min": 40,
+          "max": 180,
+          "step": 2,
+          "default": 96
+        },
+        {
+          "type": "url",
+          "id": "logo_link",
+          "label": "Logo link"
+        },
+        {
+          "type": "richtext",
+          "id": "tagline",
+          "label": "Tagline",
+          "default": "<p>Quality Shoes, Great Prices</p>"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_social",
+          "label": "Show social icons",
+          "default": true
+        },
+        {
+          "type": "url",
+          "id": "social_facebook_url",
+          "label": "Facebook URL"
+        },
+        {
+          "type": "url",
+          "id": "social_instagram_url",
+          "label": "Instagram URL"
+        },
+        {
+          "type": "url",
+          "id": "social_tiktok_url",
+          "label": "TikTok URL"
+        }
+      ]
+    },
+    {
+      "type": "column",
+      "name": "Info column",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Online Store"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content",
+          "default": "<p>Monday to Sunday</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "About This",
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "brand",
+          "settings": {
+            "logo_width": 280,
+            "logo_height": 96,
+            "tagline": "<p>Quality Shoes, Great Prices</p>"
+          }
+        },
+        {
+          "type": "column",
+          "settings": {
+            "title": "Online Store",
+            "content": "<p>Monday to Sunday</p>"
+          }
+        },
+        {
+          "type": "column",
+          "settings": {
+            "title": "Location",
+            "content": "<p>#107 Manila Bay Spinning Mills<br>Compound Shoemaker's Group<br>Warehouse, Brgy. Jesus Dela Pe&ntilde;a,<br>Marikina City, Philippines 1803</p>"
+          }
+        },
+        {
+          "type": "column",
+          "settings": {
+            "title": "Contacts",
+            "content": "<p>+63-917-701-3367<br>+63-917-701-8367<br>+63-917-102-3218<br>customerservice@shoeboxoutlet.com.ph</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
