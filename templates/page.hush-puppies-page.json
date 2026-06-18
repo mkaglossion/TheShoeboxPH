@@ -21,7 +21,8 @@
           "type": "brand",
           "settings": {
             "title": "Hush Puppies",
-            "brand_link": "",
+            "image": "shopify://shop_images/hp_logo.png",
+            "brand_link": "shopify://pages/hush-puppies-shoes",
             "submenu_menu": "",
             "content_html": ""
           }
@@ -30,7 +31,8 @@
           "type": "brand",
           "settings": {
             "title": "K-Swiss",
-            "brand_link": "",
+            "image": "shopify://shop_images/ks_logo.png",
+            "brand_link": "shopify://pages/kswiss-shoes",
             "submenu_menu": "",
             "content_html": ""
           }
@@ -39,7 +41,8 @@
           "type": "brand",
           "settings": {
             "title": "Palladium",
-            "brand_link": "",
+            "image": "shopify://shop_images/Palladium-logo-1.png",
+            "brand_link": "shopify://pages/palladium-shoes",
             "submenu_menu": "",
             "content_html": ""
           }
@@ -48,6 +51,7 @@
           "type": "brand",
           "settings": {
             "title": "Vionic",
+            "image": "shopify://shop_images/vc_l_ogo.png",
             "brand_link": "",
             "submenu_menu": "",
             "content_html": ""
@@ -57,7 +61,8 @@
           "type": "brand",
           "settings": {
             "title": "Sebago",
-            "brand_link": "",
+            "image": "shopify://shop_images/sb_logo.png",
+            "brand_link": "shopify://pages/sebago-shoes",
             "submenu_menu": "",
             "content_html": ""
           }
@@ -85,11 +90,11 @@
         "mobile_padding_y": 14,
         "desktop_columns": 5,
         "mobile_columns": 3,
-        "desktop_gap": 24,
+        "desktop_gap": 0,
         "mobile_gap": 12,
         "desktop_row_height": 90,
         "mobile_row_height": 64,
-        "desktop_logo_height": 80,
+        "desktop_logo_height": 100,
         "desktop_logo_width": 260,
         "mobile_logo_height": 46,
         "mobile_logo_width": 148,
