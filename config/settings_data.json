@@ -3887,11 +3887,11 @@
           "mobile_padding_y": 14,
           "desktop_columns": 5,
           "mobile_columns": 3,
-          "desktop_gap": 24,
+          "desktop_gap": 5,
           "mobile_gap": 12,
           "desktop_row_height": 90,
           "mobile_row_height": 64,
-          "desktop_logo_height": 80,
+          "desktop_logo_height": 100,
           "desktop_logo_width": 260,
           "mobile_logo_height": 46,
           "mobile_logo_width": 148,
@@ -3901,6 +3901,7 @@
       }
     },
     "content_for_index": [
+      "brand_logo_strip_UjPtnp",
       "advanced_content_dbxqR7",
       "advanced_content_JYVYDN",
       "grid_banner_kFzJha",
@@ -3917,8 +3918,7 @@
       "grid_banner_7iNrh3",
       "product_list_WwrW86",
       "advanced_content_4HWi3D",
-      "advanced_content_fFUqUX",
-      "brand_logo_strip_UjPtnp"
+      "advanced_content_fFUqUX"
     ]
   },
   "presets": {
