@@ -3240,42 +3240,6 @@
           "opacity_overlay": 0
         }
       },
-      "advanced_content_dbxqR7": {
-        "type": "advanced-content",
-        "blocks": {
-          "html_qhAeAT": {
-            "type": "html",
-            "settings": {
-              "code": "",
-              "width": "100%",
-              "align": "auto"
-            }
-          }
-        },
-        "block_order": [
-          "html_qhAeAT"
-        ],
-        "custom_css": [],
-        "settings": {
-          "animation": "",
-          "paddingsection": "0px 0px 0px 0px",
-          "paddingmobile": "0px 0px 0px 0px",
-          "marginsection": "0px 0px 0px 0px",
-          "marginmobile": "0px 0px 0px 0px",
-          "zindex": "0",
-          "title_top": "Sub Title Top",
-          "title": "",
-          "des": "<body>\n\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>Responsive Brand Logos</title>\n\n  <style>\n    /* Container: responsive grid of logos */\n    .brand-logos {\n      display: grid;\n      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));\n      gap: 1rem;\n      align-items: center;\n      justify-items: center;\n      padding: 1rem;\n    }\n\n    /* Each logo wrapper */\n    .brand-logo {\n      display: flex;\n      align-items: center;\n      justify-content: center;\n      max-height: 80px;\n      width: 100%;\n      overflow: hidden;\n    }\n\n    /* Logos themselves */\n    .brand-logo img {\n      max-width: 100%;\n      max-height: 100%;\n      height: auto;\n      width: auto;\n      object-fit: contain;\n      display: block;\n      transition: transform 0.3s ease, opacity 0.3s ease;\n    }\n\n    /* Palladium only */\n    .palladium-logo img {\n      max-width: 65%;\n    }\n\n    /* Hover effect */\n    .brand-logo:hover img {\n      transform: scale(1.1);\n      opacity: 0.9;\n    }\n\n    /* Mobile view: exactly 3 columns */\n    @media (max-width: 600px) {\n      .brand-logos {\n        grid-template-columns: repeat(3, 1fr);\n        gap: 0.5rem;\n      }\n\n      .brand-logo {\n        max-height: 60px;\n      }\n\n      .palladium-logo img {\n        max-width: 65%;\n      }\n    }\n\n    /* Very narrow screens */\n    @media (max-width: 400px) {\n      .brand-logos {\n        gap: 0.4rem;\n      }\n\n      .brand-logo {\n        max-height: 60px;\n      }\n    }\n\n    /* On very wide screens */\n    @media (min-width: 1200px) {\n      .brand-logo {\n        max-height: 150px;\n      }\n    }\n  </style>\n\n  <!-- Brand Logos Section -->\n  <div class=\"brand-logos\">\n    <a href=\"/pages/hush-puppies-shoes\" class=\"brand-logo\">\n      <img src=\"https://cdn.shopify.com/s/files/1/0934/7537/3367/files/hp_logo.png?v=1748246470\" alt=\"Hush Puppies\">\n    </a>\n\n    <a href=\"/pages/kswiss-shoes\" class=\"brand-logo\">\n      <img src=\"https://cdn.shopify.com/s/files/1/0934/7537/3367/files/ks_logo.png?v=1748246470\" alt=\"K-Swiss\">\n    </a>\n\n    <a href=\"/pages/palladium-shoes\" class=\"brand-logo palladium-logo\">\n      <img src=\"https://cdn.shopify.com/s/files/1/0934/7537/3367/files/Palladiumsecondary_logo_black-01_d5f52c05-71d1-4c32-ae1b-96fae08ec94d.png?v=1781600382\" alt=\"Palladium\">\n    </a>\n\n    <a href=\"/pages/sebago-shoes\" class=\"brand-logo\">\n      <img src=\"https://cdn.shopify.com/s/files/1/0934/7537/3367/files/sb_logo.png?v=1748246470\" alt=\"Sebago\">\n    </a>\n\n    <a href=\"/pages/vionic-shoes\" class=\"brand-logo\">\n      <img src=\"https://cdn.shopify.com/s/files/1/0934/7537/3367/files/vc_l_ogo.png?v=1748246470\" alt=\"Vionic\">\n    </a>\n  </div>\n\n</body>",
-          "setwidth": "full",
-          "padding": false,
-          "col_center": false,
-          "bgsection": "rgba(0,0,0,0)",
-          "rangebg": 0,
-          "bgbefore": "rgba(0,0,0,0)",
-          "e_size": "auto",
-          "e_repeat": "no-repeat"
-        }
-      },
       "grid_banner_k8fE4q": {
         "type": "grid-banner",
         "blocks": {
@@ -3501,53 +3465,6 @@
           "opacity_overlay": 0
         }
       },
-      "grid_banner_HCciqd": {
-        "type": "grid-banner",
-        "blocks": {
-          "banner_LYRnnD": {
-            "type": "banner",
-            "settings": {
-              "image": "shopify://shop_images/Brand_Banner_1200x165px_Scholl.jpg",
-              "image_mobile": "shopify://shop_images/Brand_Banner_mobile_640x640px_Scholl_4cab2e5d-d011-4373-a7ea-360489282343.jpg",
-              "width": "12",
-              "description": "",
-              "bg_color": "#fefefe",
-              "colordef": "#ffffff",
-              "opacity_bg": 0,
-              "style_btn": "btn-underline btn-underline-white",
-              "button_text": "",
-              "button_icon": "",
-              "button_link": "shopify://collections/scholl",
-              "vertical": "mid",
-              "horizontal": "center",
-              "text_align": "center"
-            }
-          }
-        },
-        "block_order": [
-          "banner_LYRnnD"
-        ],
-        "disabled": true,
-        "settings": {
-          "animation": "",
-          "paddingsection": "10px 0px 0px 0px",
-          "paddingmobile": "10px 0px 0px 0px",
-          "marginsection": "0px 0px 0px 0px",
-          "marginmobile": "0px 0px 0px 0px",
-          "bgsection": "#fefefe",
-          "bgstyle": false,
-          "bgbefore": "#e3c9b8",
-          "title_top": "",
-          "title": "",
-          "des": "",
-          "setwidth": "full",
-          "no_gutter": false,
-          "show_overlay": false,
-          "gradient_overlay": false,
-          "bg_overlay": "#000000",
-          "opacity_overlay": 0
-        }
-      },
       "advanced_content_4HWi3D": {
         "type": "advanced-content",
         "blocks": {
@@ -3653,30 +3570,6 @@
           "show": 6
         }
       },
-      "product_list_UH4VVQ": {
-        "type": "product-list",
-        "disabled": true,
-        "settings": {
-          "animation": "",
-          "paddingsection": "30px 0px 0px 0px",
-          "paddingmobile": "30px 0px 0px 0px",
-          "marginsection": "30px 0px 0px 0px",
-          "marginmobile": "0px 0px 0px 0px",
-          "bgsection": "#ffffff",
-          "setwidth": "full",
-          "title_top": "",
-          "title": "",
-          "des": "",
-          "collection": "scholl",
-          "arrows": true,
-          "draggable": true,
-          "dots": true,
-          "infinite": true,
-          "rows": "1",
-          "limit": 6,
-          "show": 6
-        }
-      },
       "product_list_WwrW86": {
         "type": "product-list",
         "settings": {
@@ -3757,42 +3650,6 @@
           "rows": "1",
           "limit": 6,
           "show": 6
-        }
-      },
-      "advanced_content_JYVYDN": {
-        "type": "advanced-content",
-        "blocks": {
-          "html_q6Rjgm": {
-            "type": "html",
-            "settings": {
-              "code": "<body>\n\n\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes\">\n  <title>Swiper Banner | Clickable Image Landing Page</title>\n  <!-- Swiper CSS -->\n  <link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css\">\n  <style>\n    * {\n      margin: 0;\n      padding: 0;\n      box-sizing: border-box;\n    }\n\n    html, body {\n      position: relative;\n      width: 100%;\n      background: #000000;  /* pure black background, matches brand feel */\n      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;\n      scroll-behavior: smooth;\n    }\n\n    /* main swiper container — full width, no overflow issues */\n    .swiper-container {\n      width: 100%;\n      max-width: 100vw;\n      overflow: hidden;\n      position: relative;\n    }\n\n    .swiper {\n      width: 100%;\n      height: auto;\n      display: block;\n    }\n\n    .swiper-slide {\n      display: flex;\n      justify-content: center;\n      align-items: center;\n      background: #000;  /* sleek dark background for gaps */\n      position: relative;\n    }\n\n    /* Link styling — make entire slide clickable */\n    .slide-link {\n      display: block;\n      width: 100%;\n      height: 100%;\n      line-height: 0;\n      text-decoration: none;\n      cursor: pointer;\n    }\n\n    .slide-link img {\n      width: 100%;\n      height: auto;\n      display: block;\n      object-fit: cover;\n      transition: transform 0.2s ease, opacity 0.2s ease;\n    }\n\n    /* subtle hover effect (desktop only, but harmless on touch) */\n    .slide-link:hover img {\n      opacity: 0.98;\n      transform: scale(1.01);\n    }\n\n    /* Desktop vs Mobile visibility */\n    .swiper-desktop {\n      display: block;\n    }\n\n    .swiper-mobile {\n      display: none;\n    }\n\n    /* optional: tiny indicator dots can be customized but we keep default Swiper style */\n    .swiper-pagination-bullet {\n      background: #ffffff;\n      opacity: 0.6;\n    }\n    .swiper-pagination-bullet-active {\n      background: #ff6b6b;\n      opacity: 1;\n    }\n\n    /* for better mobile tap feedback */\n    @media (max-width: 767px) {\n      .swiper-desktop {\n        display: none;\n      }\n      .swiper-mobile {\n        display: block;\n      }\n      .slide-link:active img {\n        opacity: 0.9;\n        transform: scale(0.99);\n      }\n    }\n\n    /* optional smooth container */\n    .banner-wrapper {\n      margin: 0;\n      padding: 0;\n    }\n  </style>\n\n\n\n<div class=\"banner-wrapper\">\n  <!-- DESKTOP SWIPER (≥768px) -->\n  <div class=\"swiper-container swiper-desktop\">\n    <div class=\"swiper mySwiperDesktop\">\n      <div class=\"swiper-wrapper\">\n        <!-- SLIDE 1 (Desktop) - fully clickable, linking to Charge Sneaker Women's Shoes -->\n        <div class=\"swiper-slide\">\n          <a href=\"https://www.theshoeboxoutlet.com.ph/collections/charge-sneaker-womens-shoes\" class=\"slide-link\" target=\"_blank\" rel=\"noopener noreferrer\">\n            <img src=\"https://cdn.shopify.com/s/files/1/0934/7537/3367/files/Charge_Sneakers_Banner_2_76290051-6406-4181-b0ab-a354a103ce6f.jpg?v=1773624116\" alt=\"Charge Sneaker Women's Collection - Shop Now\">\n          </a>\n        </div>\n        <!-- Optional extra slide? Currently only one image, but if you'd like to add more desktop banners later, just duplicate slide -->\n        <!-- We keep exactly one per requirement but it's loop-enabled so it cycles seamlessly -->\n      </div>\n      <!-- Optional pagination (nice to have) -->\n      <div class=\"swiper-pagination\"></div>\n      <!-- optional navigation arrows if needed later, but minimal design -->\n    </div>\n  </div>\n\n  <!-- MOBILE SWIPER (≤767px) -->\n  <div class=\"swiper-container swiper-mobile\">\n    <div class=\"swiper mySwiperMobile\">\n      <div class=\"swiper-wrapper\">\n        <!-- SLIDE 1 (Mobile) - fully clickable, same landing page -->\n        <div class=\"swiper-slide\">\n          <a href=\"https://www.theshoeboxoutlet.com.ph/collections/charge-sneaker-womens-shoes\" class=\"slide-link\" target=\"_blank\" rel=\"noopener noreferrer\">\n            <img src=\"https://cdn.shopify.com/s/files/1/0934/7537/3367/files/Artboard_3.jpg?v=1773624116\" alt=\"Charge Sneaker Women's - Mobile Banner\">\n          </a>\n        </div>\n        <!-- if you ever want a second mobile banner, you can add another slide, same link or different -->\n      </div>\n      <div class=\"swiper-pagination\"></div>\n    </div>\n  </div>\n</div>\n\n<!-- Swiper JS -->\n<script src=\"https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js\"></script>\n<script>\n  (function() {\n    // Desktop Swiper initialization\n    const desktopSwiper = new Swiper(\".mySwiperDesktop\", {\n      loop: true,\n      autoplay: {\n        delay: 3000,\n        disableOnInteraction: false,\n      },\n      speed: 800,\n      pagination: {\n        el: \".mySwiperDesktop .swiper-pagination\",\n        clickable: true,\n        dynamicBullets: false,\n      },\n      // ensures smooth infinite looping even with 1 slide\n      loopAdditionalSlides: 1,\n      allowTouchMove: true,\n    });\n\n    // Mobile Swiper initialization\n    const mobileSwiper = new Swiper(\".mySwiperMobile\", {\n      loop: true,\n      autoplay: {\n        delay: 3000,\n        disableOnInteraction: false,\n      },\n      speed: 800,\n      pagination: {\n        el: \".mySwiperMobile .swiper-pagination\",\n        clickable: true,\n        dynamicBullets: true,\n      },\n      loopAdditionalSlides: 1,\n      allowTouchMove: true,\n    });\n\n    // For extra robustness: if there are any issues with duplicate clicks on anchor, it's fine\n    // Also ensures that the entire image area is clickable (already using block link)\n    console.log(\"Swiper banners loaded with clickable landing page: https://www.theshoeboxoutlet.com.ph/collections/charge-sneaker-womens-shoes\");\n  })();\n</script>\n\n\n```</body>",
-              "width": "100%",
-              "align": "auto"
-            }
-          }
-        },
-        "block_order": [
-          "html_q6Rjgm"
-        ],
-        "name": "Custom HTML",
-        "settings": {
-          "animation": "",
-          "paddingsection": "0px 0px 0px 0px",
-          "paddingmobile": "0px 0px 0px 0px",
-          "marginsection": "0px 0px 0px 0px",
-          "marginmobile": "0px 0px 0px 0px",
-          "zindex": "0",
-          "title_top": "",
-          "title": "",
-          "des": "",
-          "setwidth": "full",
-          "padding": false,
-          "col_center": false,
-          "bgsection": "rgba(0,0,0,0)",
-          "rangebg": 0,
-          "bgbefore": "rgba(0,0,0,0)",
-          "e_size": "auto",
-          "e_repeat": "no-repeat"
         }
       },
       "header-7": {
@@ -3925,7 +3782,7 @@
           "marginmobile": "0px 0px 0px 0px",
           "bgsection": "#ffffff",
           "setwidth": "full",
-          "title": "Swiper banner",
+          "title": "",
           "des": "",
           "autoplay": true,
           "delay": 3000,
@@ -3939,8 +3796,7 @@
     },
     "content_for_index": [
       "brand_logo_strip_UjPtnp",
-      "advanced_content_dbxqR7",
-      "advanced_content_JYVYDN",
+      "swiper_banner_TGdzL6",
       "grid_banner_kFzJha",
       "grid_banner_k8fE4q",
       "product_list_kQtdwR",
@@ -3950,13 +3806,10 @@
       "product_list_33cN6C",
       "grid_banner_A3LjUT",
       "product_list_cY9ADk",
-      "grid_banner_HCciqd",
-      "product_list_UH4VVQ",
       "grid_banner_7iNrh3",
       "product_list_WwrW86",
       "advanced_content_4HWi3D",
-      "advanced_content_fFUqUX",
-      "swiper_banner_TGdzL6"
+      "advanced_content_fFUqUX"
     ]
   },
   "presets": {
