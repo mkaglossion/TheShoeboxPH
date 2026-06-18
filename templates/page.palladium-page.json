@@ -50,8 +50,9 @@
         "brand_3wb94j": {
           "type": "brand",
           "settings": {
-            "title": "Brand",
-            "brand_link": "",
+            "title": "Vionic",
+            "image": "shopify://shop_images/vc_l_ogo.png",
+            "brand_link": "shopify://pages/vionic-shoes",
             "submenu_menu": "",
             "content_html": ""
           }
@@ -59,8 +60,9 @@
         "brand_9HbxYG": {
           "type": "brand",
           "settings": {
-            "title": "Brand",
-            "brand_link": "",
+            "title": "Sebago",
+            "image": "shopify://shop_images/sb_logo.png",
+            "brand_link": "shopify://pages/sebago-shoes",
             "submenu_menu": "",
             "content_html": ""
           }
@@ -88,11 +90,11 @@
         "mobile_padding_y": 14,
         "desktop_columns": 5,
         "mobile_columns": 3,
-        "desktop_gap": 24,
+        "desktop_gap": 0,
         "mobile_gap": 12,
         "desktop_row_height": 90,
         "mobile_row_height": 64,
-        "desktop_logo_height": 80,
+        "desktop_logo_height": 100,
         "desktop_logo_width": 260,
         "mobile_logo_height": 46,
         "mobile_logo_width": 148,
