@@ -370,7 +370,7 @@
             "logo_link": "https://www.theshoeboxoutlet.com.ph/",
             "tagline": "<p>Quality Shoes, Great Prices</p>",
             "show_social": true,
-            "social_facebook_url": "",
+            "social_facebook_url": "https://www.facebook.com/profile.php?id=61581321625151",
             "social_instagram_url": "",
             "social_tiktok_url": ""
           }
@@ -393,7 +393,7 @@
           "type": "column",
           "settings": {
             "title": "Contacts",
-            "content": "<p>+63-917-701-3367<br>+63-917-701-8367<br>+63-917-102-3218<br>customerservice@shoeboxoutlet.com.ph</p>"
+            "content": "<p>+63-917-701-3367<br/>+63-917-701-8367<br/>+63-917-102-3218<br/>customerservice@shoeboxoutlet.com.ph</p>"
           }
         }
       },
