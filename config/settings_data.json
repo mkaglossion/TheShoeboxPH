@@ -3680,8 +3680,8 @@
           "desktop_logo_height": 100,
           "desktop_logo_width": 260,
           "mobile_logo_height": 46,
-          "mobile_logo_width": 148,
-          "panel_padding_y": 28,
+          "mobile_logo_width": 180,
+          "panel_padding_y": 56,
           "mobile_panel_padding_y": 20
         }
       },
