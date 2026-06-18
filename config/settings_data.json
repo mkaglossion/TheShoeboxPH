@@ -3668,7 +3668,7 @@
           "panel_text": "#111111",
           "panel_title_color": "#111111",
           "active_underline_color": "#d11f2a",
-          "show_divider": true,
+          "show_divider": false,
           "padding_y": 18,
           "mobile_padding_y": 14,
           "desktop_columns": 5,
