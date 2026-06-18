@@ -70,11 +70,48 @@
   }
 </style>
 
+<style>
+  .site-footer__accordion-toggle{display:flex;align-items:center;justify-content:space-between;width:100%;padding:0;border:0;background:none;color:inherit;cursor:pointer;-webkit-appearance:none;appearance:none;text-align:left}
+  .site-footer__accordion-toggle:focus{outline:none}
+  .site-footer__accordion-label{display:block;flex:1 1 auto;min-width:0}
+  .site-footer__accordion-icon{display:none;position:relative;flex:0 0 14px;width:14px;height:14px;margin-left:12px;color:currentColor}
+  .site-footer__accordion-icon::before,.site-footer__accordion-icon::after{content:"";position:absolute;left:50%;top:50%;background:currentColor;transform:translate(-50%,-50%);transition:transform .2s ease,opacity .2s ease}
+  .site-footer__accordion-icon::before{width:14px;height:2px}
+  .site-footer__accordion-icon::after{width:2px;height:14px}
+  @media (max-width: 749px){
+    .site-footer__accordion-item{padding:0 0 18px;border-bottom:0}
+    .site-footer__accordion-item + .site-footer__accordion-item{margin-top:8px}
+    .site-footer__accordion-toggle{padding:0 0 14px;border-bottom:1px solid rgba(0,0,0,.10)}
+    .site-footer__accordion-item:first-child{padding-top:0}
+    .site-footer__accordion-item .site-footer__section-title{margin-bottom:0}
+    .site-footer__accordion-item .site-footer__accordion-icon{display:block}
+    .site-footer__accordion-panel{display:none;padding-top:16px}
+    .site-footer__accordion-item.is-open .site-footer__accordion-panel{display:block}
+    .site-footer__accordion-item.is-open .site-footer__accordion-icon::after{opacity:0;transform:translate(-50%,-50%) scaleY(0)}
+    .site-footer__accordion-item.is-open{padding-bottom:20px}
+  }
+  @media (min-width: 750px){
+    .site-footer__accordion-panel{display:block !important}
+  }
+  @media (max-width: 749px){
+    .section-footer-email{padding-top:12px;text-align:center}
+    .section-footer-email .site-footer__section-title,
+    .section-footer-email .site-footer__newsletter-label{display:block;text-align:center}
+    .section-footer-email .footer-email .input-group{align-items:stretch}
+    .section-footer-email .footer-email .form-control{text-align:center;max-width:100%}
+    .section-footer-email .footer-email .d-flex{width:100%;justify-content:center}
+    .section-footer-email .footer-email .btn{min-width:150px;margin:0 auto}
+    .section-footer-email .site-footer__newsletter-label{line-height:1.6}
+    .section-footer-email .form-vertical{padding-top:4px}
+  }
+</style>
+
 <footer
   class="site-footer {% if section.settings.image_bg != blank %} lazyload {% endif %}"
   role="contentinfo"
   style="{% if section.settings.image_bg != blank %}background-image:url({%- include 'srcBlank' -%}){% endif %}"
   data-bg="{{ section.settings.image_bg | img_url:"1920x" }}"
+  data-footer-accordion="{{ section.id }}"
 >
   <div class="{{ section.settings.setwidth }}">
     <div class="row pb-4">
@@ -111,17 +148,31 @@
 
             {%- when 'menu' -%}
               {%- if linklists[block.settings.link_list].links.size > 0 -%}
-                <div class="site-footer__section">
-                  {%- if linklists[block.settings.link_list].title != blank -%}
-                    <h4 class="h5 site-footer__section-title">{{ linklists[block.settings.link_list].title }}</h4>
-                  {%- endif -%}
-                  <ul class="site-footer__list">
-                    {%- for link in linklists[block.settings.link_list].links -%}
-                      <li class="site-footer__list-item">
-                        <a href="{{ link.url }}">{{ link.title }}</a>
-                      </li>
-                    {%- endfor -%}
-                  </ul>
+                <div class="site-footer__section site-footer__accordion-item" data-footer-accordion-item>
+                  {%- assign footer_menu_title = linklists[block.settings.link_list].title | default: 'Menu' -%}
+                  <button
+                    type="button"
+                    class="h5 site-footer__section-title site-footer__accordion-toggle"
+                    aria-expanded="false"
+                    aria-controls="FooterAccordion-{{ section.id }}-{{ block.id }}"
+                    data-footer-accordion-toggle
+                  >
+                    <span class="site-footer__accordion-label">{{ footer_menu_title }}</span>
+                    <span class="site-footer__accordion-icon" aria-hidden="true"></span>
+                  </button>
+                  <div
+                    id="FooterAccordion-{{ section.id }}-{{ block.id }}"
+                    class="site-footer__accordion-panel"
+                    data-footer-accordion-panel
+                  >
+                    <ul class="site-footer__list">
+                      {%- for link in linklists[block.settings.link_list].links -%}
+                        <li class="site-footer__list-item">
+                          <a href="{{ link.url }}">{{ link.title }}</a>
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+                  </div>
                 </div>
               {%- endif -%}
 
@@ -405,6 +456,53 @@
       </div>
     </div>
   </div>
+  <script>
+    (function() {
+      var root = document.querySelector('[data-footer-accordion="{{ section.id }}"]');
+      if (!root) return;
+
+      var mobileQuery = window.matchMedia('(max-width: 749px)');
+      var items = root.querySelectorAll('[data-footer-accordion-item]');
+
+      function syncAccordionState() {
+        items.forEach(function(item) {
+          var toggle = item.querySelector('[data-footer-accordion-toggle]');
+          var panel = item.querySelector('[data-footer-accordion-panel]');
+          var isOpen = item.classList.contains('is-open');
+
+          if (mobileQuery.matches) {
+            if (toggle) toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            if (panel) panel.style.display = isOpen ? 'block' : 'none';
+          } else {
+            if (toggle) toggle.setAttribute('aria-expanded', 'true');
+            if (panel) panel.style.display = '';
+          }
+        });
+      }
+
+      root.addEventListener('click', function(event) {
+        var toggle = event.target.closest('[data-footer-accordion-toggle]');
+        if (!toggle || !mobileQuery.matches) return;
+
+        var item = toggle.closest('[data-footer-accordion-item]');
+        var panel = item ? item.querySelector('[data-footer-accordion-panel]') : null;
+        if (!item) return;
+
+        var nextState = !item.classList.contains('is-open');
+        item.classList.toggle('is-open', nextState);
+        toggle.setAttribute('aria-expanded', nextState ? 'true' : 'false');
+        if (panel) panel.style.display = nextState ? 'block' : 'none';
+      });
+
+      if (mobileQuery.addEventListener) {
+        mobileQuery.addEventListener('change', syncAccordionState);
+      } else if (mobileQuery.addListener) {
+        mobileQuery.addListener(syncAccordionState);
+      }
+
+      syncAccordionState();
+    })();
+  </script>
 </footer>
 {% schema %}
 {
