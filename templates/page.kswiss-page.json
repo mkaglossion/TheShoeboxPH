@@ -40,8 +40,9 @@
         "brand_NeYbeN": {
           "type": "brand",
           "settings": {
-            "title": "Brand",
-            "brand_link": "",
+            "title": "Palladium",
+            "image": "shopify://shop_images/Palladium-logo-1.png",
+            "brand_link": "shopify://pages/palladium-shoes",
             "submenu_menu": "",
             "content_html": ""
           }
