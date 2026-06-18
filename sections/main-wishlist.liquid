@@ -104,6 +104,73 @@
       padding: 12px 20px;
     }
 
+    #shopify-section-{{ section.id }} .wishlist-page__bulk {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px 18px;
+      padding: 16px 18px;
+      border: 1px solid var(--wishlist-border);
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.84);
+    }
+
+    #shopify-section-{{ section.id }} .wishlist-page__bulk.is-hidden {
+      display: none;
+    }
+
+    #shopify-section-{{ section.id }} .wishlist-page__bulk-left {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    #shopify-section-{{ section.id }} .wishlist-page__select-all {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    #shopify-section-{{ section.id }} .wishlist-page__select-all input {
+      width: 18px;
+      height: 18px;
+      margin: 0;
+      accent-color: var(--wishlist-accent);
+    }
+
+    #shopify-section-{{ section.id }} .wishlist-page__selected-count {
+      color: var(--wishlist-muted);
+      font-size: 14px;
+    }
+
+    #shopify-section-{{ section.id }} .wishlist-page__selected-count strong {
+      color: var(--wishlist-text);
+    }
+
+    #shopify-section-{{ section.id }} .wishlist-page__bulk-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    #shopify-section-{{ section.id }} .wishlist-page__bulk-actions .btn {
+      border-radius: 999px;
+      min-height: 44px;
+      padding: 11px 18px;
+    }
+
+    #shopify-section-{{ section.id }} .wishlist-page__bulk-actions .btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
     #shopify-section-{{ section.id }} .wishlist-page__grid {
       display: flex;
       flex-wrap: wrap;
@@ -125,6 +192,36 @@
       max-width: 320px;
       padding-left: 0;
       padding-right: 0;
+    }
+
+    #shopify-section-{{ section.id }} .wishlist-card__select {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 2;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      margin: 0;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.96);
+      border: 1px solid rgba(17, 17, 17, 0.12);
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+      cursor: pointer;
+    }
+
+    #shopify-section-{{ section.id }} .wishlist-card__select input {
+      width: 16px;
+      height: 16px;
+      margin: 0;
+      accent-color: var(--wishlist-accent);
+    }
+
+    #shopify-section-{{ section.id }} .wishlist-card.is-selected {
+      border-color: rgba(209, 31, 42, 0.35);
+      box-shadow: 0 18px 40px rgba(209, 31, 42, 0.12);
     }
 
     #shopify-section-{{ section.id }} .wishlist-card {
@@ -268,6 +365,10 @@
 
     #shopify-section-{{ section.id }} .wishlist-card__price .wishlist-card__soldout {
       color: var(--wishlist-accent);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
     }
 
     #shopify-section-{{ section.id }} .wishlist-card__actions {
@@ -356,6 +457,10 @@
         width: 100%;
       }
 
+      #shopify-section-{{ section.id }} .wishlist-page__bulk {
+        padding: 14px;
+      }
+
       #shopify-section-{{ section.id }} .wishlist-page__grid {
         gap: 14px;
       }
@@ -405,6 +510,13 @@
         height: 24px;
       }
 
+      #shopify-section-{{ section.id }} .wishlist-card__select {
+        top: 8px;
+        left: 8px;
+        width: 30px;
+        height: 30px;
+      }
+
       #shopify-section-{{ section.id }} .wishlist-empty__title {
         font-size: 24px;
       }
@@ -440,6 +552,23 @@
       <div class="wishlist-page__actions">
         <a href="/collections/all" class="btn btn-theme gradient-theme-vertical">Continue shopping</a>
         <a href="/search" class="btn btn-outline-secondary">Search products</a>
+      </div>
+
+      <div class="wishlist-page__bulk" aria-label="Wishlist bulk actions">
+        <div class="wishlist-page__bulk-left">
+          <label class="wishlist-page__select-all">
+            <input type="checkbox" class="js-wishlist-select-all">
+            <span>Select all</span>
+          </label>
+          <span class="wishlist-page__selected-count">
+            <strong class="js-wishlist-selected-count">0</strong> selected
+          </span>
+        </div>
+        <div class="wishlist-page__bulk-actions">
+          <button type="button" class="btn btn-outline-secondary js-wishlist-bulk-remove" disabled>Remove selected</button>
+          <button type="button" class="btn btn-theme gradient-theme-vertical js-wishlist-bulk-cart" disabled>Add selected to cart</button>
+          <button type="button" class="btn btn-outline-secondary js-wishlist-bulk-checkout" disabled>Checkout selected</button>
+        </div>
       </div>
 
       <div class="js-wishlist-content wishlist-page__grid" aria-live="polite"></div>
