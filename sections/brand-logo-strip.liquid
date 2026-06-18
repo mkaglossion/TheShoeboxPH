@@ -1,15 +1,23 @@
 {%- if section.blocks.size > 0 -%}
 {%- assign section_key = 'BrandLogoStrip-' | append: section.id -%}
 {%- assign brand_menu_source = linklists[section.settings.brand_menu_source] -%}
-<div id="{{ section_key }}" class="brand-logo-strip brand-logo-strip--{{ section.id }}">
+<div id="{{ section_key }}" class="brand-logo-strip brand-logo-strip--{{ section.id }}{% if section.settings.show_divider %} brand-logo-strip--divider{% else %} brand-logo-strip--no-divider{% endif %}">
   <style>
+    #shopify-section-{{ section.id }} {
+      border-top: 0 !important;
+    }
+
     #shopify-section-{{ section.id }} .brand-logo-strip {
       background: {{ section.settings.background }};
-      {%- if section.settings.show_divider -%}
-      border-top: 1px solid rgba(0, 0, 0, 0.12);
-      {%- else -%}
-      border-top: 0;
-      {%- endif -%}
+      border-top: 0 !important;
+    }
+
+    #shopify-section-{{ section.id }} > .brand-logo-strip--divider {
+      border-top: 1px solid rgba(0, 0, 0, 0.12) !important;
+    }
+
+    #shopify-section-{{ section.id }} > .brand-logo-strip--no-divider {
+      border-top: 0 !important;
     }
 
     #shopify-section-{{ section.id }} .brand-logo-strip__inner {
