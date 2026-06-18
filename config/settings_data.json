@@ -3734,7 +3734,7 @@
               "logo_link": "",
               "tagline": "<p>Quality Shoes, Great Prices</p>",
               "show_social": true,
-              "social_facebook_url": "",
+              "social_facebook_url": "https://www.facebook.com/profile.php?id=61581321625151",
               "social_instagram_url": "",
               "social_tiktok_url": ""
             }
@@ -3770,6 +3770,8 @@
         "name": "About This",
         "settings": {
           "setwidth": "container",
+          "desktop_alignment": "left",
+          "mobile_alignment": "center",
           "background": "#ffffff",
           "text_color": "#111111",
           "title_color": "#111111",
