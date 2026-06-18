@@ -76,6 +76,16 @@
       white-space: nowrap;
     }
 
+    #shopify-section-{{ section.id }} .site-header-7__topbar-account--mobile {
+      display: none;
+      margin-left: auto;
+      flex: 0 0 auto;
+      color: var(--header7-topbar-text);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+    }
+
     #shopify-section-{{ section.id }} .site-header-7__topbar-links a:hover,
     #shopify-section-{{ section.id }} .site-header-7__topbar-links a:focus-visible {
       color: var(--header7-topbar-hover);
@@ -495,7 +505,7 @@
 
       #shopify-section-{{ section.id }} .site-header-7__topbar-inner {
         min-height: 34px;
-        justify-content: flex-start;
+        justify-content: space-between;
         align-items: center;
         flex-wrap: nowrap;
         gap: 12px;
@@ -508,7 +518,8 @@
 
       #shopify-section-{{ section.id }} .site-header-7__topbar-links {
         display: flex;
-        width: auto;
+        flex: 1 1 auto;
+        min-width: 0;
         justify-content: flex-start;
         gap: 14px;
         white-space: nowrap;
@@ -527,6 +538,14 @@
 
       #shopify-section-{{ section.id }} .site-header-7__topbar-account {
         display: none;
+      }
+
+      #shopify-section-{{ section.id }} .site-header-7__topbar-account--mobile {
+        display: inline-flex;
+        flex: 0 0 auto;
+        white-space: nowrap;
+        margin-left: 0;
+        color: var(--header7-topbar-text);
       }
 
       #shopify-section-{{ section.id }} .site-header-7__main-inner {
@@ -590,6 +609,9 @@
     {%- capture topbar_account_link -%}
       <a href="/account" class="site-header-7__topbar-account">{%- if customer -%}Profile{%- else -%}Sign up / Login{%- endif -%}</a>
     {%- endcapture -%}
+    {%- capture topbar_account_link_mobile -%}
+      <a href="/account" class="site-header-7__topbar-account site-header-7__topbar-account--mobile">{%- if customer -%}Profile{%- else -%}Sign up / Login{%- endif -%}</a>
+    {%- endcapture -%}
     <div class="site-header-7__topbar">
       <div class="{{ section.settings.setwidth }}">
         <div class="site-header-7__topbar-inner">
@@ -610,6 +632,7 @@
               {{ topbar_account_link }}
             </div>
           {%- endif -%}
+          {{ topbar_account_link_mobile }}
         </div>
       </div>
     </div>

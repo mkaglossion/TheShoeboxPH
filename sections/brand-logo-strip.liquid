@@ -143,7 +143,7 @@
       list-style: none;
       font-size: 14px;
       line-height: 1.55;
-      color: rgba(0, 0, 0, 0.74);
+      color: {{ section.settings.panel_text }};
     }
 
     #shopify-section-{{ section.id }} .brand-logo-strip__column li + li {
@@ -160,9 +160,250 @@
       color: {{ section.settings.active_underline_color }};
     }
 
+    #shopify-section-{{ section.id }} .brand-logo-strip__mobile-accordion {
+      display: none;
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__mobile-item {
+      border-top: 1px solid rgba(0, 0, 0, 0.12);
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__mobile-item:last-child {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__mobile-trigger {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      width: 100%;
+      padding: 14px 16px;
+      box-sizing: border-box;
+      color: inherit;
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__mobile-brand {
+      display: inline-flex;
+      align-items: center;
+      min-width: 0;
+      gap: 10px;
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__mobile-brand-link {
+      flex: 1 1 auto;
+      min-width: 0;
+      color: inherit;
+      text-decoration: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__mobile-caret-btn {
+      flex: 0 0 auto;
+      appearance: none;
+      border: 0;
+      background: transparent;
+      padding: 8px;
+      margin: -8px -4px -8px 0;
+      color: inherit;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__mobile-image {
+      display: block;
+      width: auto;
+      height: auto;
+      max-width: 120px;
+      max-height: 30px;
+      object-fit: contain;
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__mobile-title {
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.2;
+      color: {{ section.settings.panel_title_color }};
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__mobile-caret {
+      flex: 0 0 auto;
+      color: rgba(0, 0, 0, 0.55);
+      width: 8px;
+      height: 8px;
+      line-height: 1;
+      border-top: 2px solid currentColor;
+      border-right: 2px solid currentColor;
+      transform: rotate(45deg);
+      transform-origin: center;
+      transition: transform 0.2s ease;
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__mobile-caret::before {
+      content: "";
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__mobile-caret svg {
+      display: none;
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__mobile-item.is-open .brand-logo-strip__mobile-caret {
+      color: {{ section.settings.active_underline_color }};
+      transform: rotate(135deg);
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__mobile-panel {
+      padding: 0 16px 16px;
+      background: {{ section.settings.panel_background }};
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__mobile-columns {
+      display: grid;
+      gap: 0;
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__mobile-column {
+      border-top: 1px solid rgba(0, 0, 0, 0.10);
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__mobile-column-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      padding: 10px 0 8px;
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__mobile-column-link {
+      flex: 1 1 auto;
+      min-width: 0;
+      display: inline-flex;
+      align-items: center;
+      color: {{ section.settings.panel_title_color }} !important;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.25;
+      padding: 4px 0;
+      transition: color 0.18s ease, opacity 0.18s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__mobile-column-link:hover,
+    #shopify-section-{{ section.id }} .brand-logo-strip__mobile-column-link:focus-visible {
+      color: {{ section.settings.active_underline_color }} !important;
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__mobile-column-toggle {
+      flex: 0 0 auto;
+      appearance: none;
+      border: 0;
+      background: transparent;
+      padding: 8px;
+      margin: -8px 0 -8px auto;
+      color: inherit;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__mobile-column-caret {
+      flex: 0 0 auto;
+      color: rgba(0, 0, 0, 0.55);
+      width: 8px;
+      height: 8px;
+      line-height: 1;
+      border-top: 2px solid currentColor;
+      border-right: 2px solid currentColor;
+      transform: rotate(45deg);
+      transform-origin: center;
+      transition: transform 0.2s ease;
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__mobile-column-caret::before {
+      content: "";
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__mobile-column-caret svg {
+      display: none;
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__mobile-column.is-open .brand-logo-strip__mobile-column-toggle .brand-logo-strip__mobile-column-caret {
+      color: {{ section.settings.active_underline_color }};
+      transform: rotate(135deg);
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__mobile-column-panel {
+      padding: 0 0 12px;
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__mobile-column-panel ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      font-size: 14px;
+      line-height: 1.55;
+      color: {{ section.settings.panel_text }};
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__mobile-column-panel a {
+      color: {{ section.settings.panel_text }} !important;
+      text-decoration: none;
+      transition: color 0.18s ease, opacity 0.18s ease;
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__mobile-column-panel a:hover,
+    #shopify-section-{{ section.id }} .brand-logo-strip__mobile-column-panel a:focus-visible {
+      color: {{ section.settings.active_underline_color }} !important;
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__mobile-column-panel li + li {
+      margin-top: 10px;
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__mobile-panel[hidden] {
+      display: none !important;
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__mobile-item.is-open > .brand-logo-strip__mobile-trigger {
+      background: rgba(0, 0, 0, 0.025);
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__mobile-item.is-current > .brand-logo-strip__mobile-trigger {
+      background: rgba(224, 43, 32, 0.05);
+    }
+
+    #shopify-section-{{ section.id }} .brand-logo-strip__mobile-item.is-current .brand-logo-strip__mobile-title {
+      color: {{ section.settings.active_underline_color }};
+    }
+
     @media (max-width: 989px) {
       #shopify-section-{{ section.id }} .brand-logo-strip__inner {
         padding-top: {{ section.settings.mobile_padding_y }}px;
+      }
+
+      #shopify-section-{{ section.id }} .brand-logo-strip__tabs {
+        display: none;
+      }
+
+      #shopify-section-{{ section.id }} .brand-logo-strip__panels {
+        display: none;
+      }
+
+      #shopify-section-{{ section.id }} .brand-logo-strip__mobile-accordion {
+        display: block;
+      }
+
+      #shopify-section-{{ section.id }} .brand-logo-strip__mobile-item {
+        background: {{ section.settings.panel_background }};
       }
 
       #shopify-section-{{ section.id }} .brand-logo-strip__tabs {
@@ -194,6 +435,7 @@
         font-size: 15px;
         margin-bottom: 10px;
         padding-bottom: 8px;
+        color: {{ section.settings.panel_title_color }};
       }
 
       #shopify-section-{{ section.id }} .brand-logo-strip__column ul {
@@ -302,6 +544,115 @@
         </section>
       {%- endfor -%}
     </div>
+
+    <div class="brand-logo-strip__mobile-accordion">
+      {%- for block in section.blocks -%}
+        {%- assign brand_handle = block.settings.title | strip | split: '[' | first | strip | handleize -%}
+        {%- assign brand_menu_item = blank -%}
+        {%- assign brand_columns_source = blank -%}
+
+        {%- if brand_menu_source != blank and brand_menu_source.links.size > 0 -%}
+          {%- for menu_item in brand_menu_source.links -%}
+            {%- assign menu_item_handle = menu_item.title | strip | split: '[' | first | strip | handleize -%}
+            {%- if menu_item_handle == brand_handle -%}
+              {%- assign brand_menu_item = menu_item -%}
+              {%- break -%}
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endif -%}
+
+        {%- if brand_menu_item != blank and brand_menu_item.links.size > 0 -%}
+          {%- assign brand_columns_source = brand_menu_item -%}
+        {%- elsif block.settings.submenu_menu != blank -%}
+          {%- assign brand_columns_source = linklists[block.settings.submenu_menu] -%}
+        {%- endif -%}
+
+        <div class="brand-logo-strip__mobile-item">
+          <div class="brand-logo-strip__mobile-trigger">
+            {%- if block.settings.brand_link != blank -%}
+              <a href="{{ block.settings.brand_link }}" class="brand-logo-strip__mobile-brand brand-logo-strip__mobile-brand-link" aria-label="{{ block.settings.title | escape }}">
+            {%- else -%}
+              <span class="brand-logo-strip__mobile-brand">
+            {%- endif -%}
+              {%- if block.settings.image != blank -%}
+                <img
+                  class="brand-logo-strip__mobile-image"
+                  src="{{ block.settings.image | img_url: '400x' }}"
+                  srcset="{{ block.settings.image | img_url: '400x' }} 1x, {{ block.settings.image | img_url: '800x' }} 2x"
+                  alt="{{ block.settings.image.alt | default: block.settings.title | escape }}">
+              {%- else -%}
+                <span class="brand-logo-strip__mobile-title">{{ block.settings.title | escape }}</span>
+              {%- endif -%}
+            {%- if block.settings.brand_link != blank -%}
+              </a>
+            {%- else -%}
+              </span>
+            {%- endif -%}
+
+            <button
+              type="button"
+              class="brand-logo-strip__mobile-caret-btn"
+              aria-expanded="false"
+              aria-controls="BrandLogoStripMobilePanel-{{ section.id }}-{{ block.id }}"
+              data-mobile-brand="{{ block.id }}">
+              <span class="brand-logo-strip__mobile-caret" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+                <path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </span>
+            </button>
+          </div>
+
+          <div
+            id="BrandLogoStripMobilePanel-{{ section.id }}-{{ block.id }}"
+            class="brand-logo-strip__mobile-panel"
+            data-mobile-panel="{{ block.id }}"
+            hidden>
+            {%- if brand_columns_source != blank and brand_columns_source.links.size > 0 -%}
+              <div class="brand-logo-strip__mobile-columns">
+                {%- for column_link in brand_columns_source.links -%}
+                  <div class="brand-logo-strip__mobile-column" data-mobile-column>
+                    <div class="brand-logo-strip__mobile-column-head">
+                      <a href="{{ column_link.url }}" class="brand-logo-strip__mobile-column-link">{{ column_link.title }}</a>
+                      <button type="button" class="brand-logo-strip__mobile-column-toggle" aria-expanded="false" aria-controls="BrandLogoStripMobileColumn-{{ section.id }}-{{ block.id }}-{{ forloop.index }}" data-mobile-column-toggle>
+                        <span class="brand-logo-strip__mobile-column-caret" aria-hidden="true">
+                          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+                            <path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+                          </svg>
+                        </span>
+                      </button>
+                    </div>
+                    <div id="BrandLogoStripMobileColumn-{{ section.id }}-{{ block.id }}-{{ forloop.index }}" class="brand-logo-strip__mobile-column-panel" hidden>
+                    {%- if column_link.links.size > 0 -%}
+                      <div class="brand-logo-strip__mobile-links">
+                        <ul>
+                          {%- for item_link in column_link.links -%}
+                            <li>
+                              <a href="{{ item_link.url }}">{{ item_link.title }}</a>
+                            </li>
+                          {%- endfor -%}
+                        </ul>
+                      </div>
+                    {%- else -%}
+                      <ul>
+                        <li>
+                          <a href="{{ column_link.url }}">{{ column_link.title }}</a>
+                        </li>
+                      </ul>
+                    {%- endif -%}
+                    </div>
+                  </div>
+                {%- endfor -%}
+              </div>
+            {%- elsif block.settings.content_html != blank -%}
+              <div class="brand-logo-strip__column">
+                {{ block.settings.content_html }}
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
   </div>
 
     <script>
@@ -310,6 +661,36 @@
       if (!root) return;
 
       var isTouchLike = (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) || (navigator.maxTouchPoints || 0) > 0;
+      var currentBrandId = null;
+
+      function normalizePath(path) {
+        if (!path) return '';
+        return path.replace(/\/+$/, '') || '/';
+      }
+
+      function getCurrentBrandId() {
+        var currentPath = normalizePath(window.location.pathname);
+        var matchedId = null;
+
+        root.querySelectorAll('[data-brand-tab][href]').forEach(function (tab) {
+          var href = tab.getAttribute('href');
+
+          if (!href || href === '#') {
+            return;
+          }
+
+          try {
+            var url = new URL(href, window.location.origin);
+            if (normalizePath(url.pathname) === currentPath) {
+              matchedId = tab.getAttribute('data-brand-tab');
+            }
+          } catch (error) {
+            // Ignore malformed URLs and continue.
+          }
+        });
+
+        return matchedId;
+      }
 
       function activateBrand(id) {
         var brandTabs = root.querySelectorAll('[data-brand-tab]');
@@ -328,18 +709,47 @@
         });
       }
 
-      function deactivateBrands() {
+      function syncCurrentBrandState() {
         var brandTabs = root.querySelectorAll('[data-brand-tab]');
         var brandPanels = root.querySelectorAll('[data-brand-panel]');
 
         brandTabs.forEach(function (tab) {
-          tab.classList.remove('is-active');
-          tab.setAttribute('aria-selected', 'false');
+          var active = currentBrandId && tab.getAttribute('data-brand-tab') === currentBrandId;
+          tab.classList.toggle('is-active', active);
+          tab.setAttribute('aria-selected', active ? 'true' : 'false');
         });
 
         brandPanels.forEach(function (panel) {
           panel.classList.remove('is-active');
           panel.setAttribute('aria-hidden', 'true');
+        });
+      }
+
+      function closeMobileItems(exceptId) {
+        root.querySelectorAll('[data-mobile-brand]').forEach(function (btn) {
+          var brandId = btn.getAttribute('data-mobile-brand');
+          var panel = root.querySelector('[data-mobile-panel="' + brandId + '"]');
+          var isExcept = exceptId && brandId === exceptId;
+
+          if (!panel || isExcept) {
+            return;
+          }
+
+          btn.setAttribute('aria-expanded', 'false');
+          btn.parentNode.classList.remove('is-open');
+          panel.hidden = true;
+        });
+      }
+
+      function syncCurrentMobileState() {
+        root.querySelectorAll('[data-mobile-brand]').forEach(function (btn) {
+          var brandId = btn.getAttribute('data-mobile-brand');
+          var item = btn.closest('.brand-logo-strip__mobile-item');
+          var isCurrent = currentBrandId && brandId === currentBrandId;
+
+          if (item) {
+            item.classList.toggle('is-current', isCurrent);
+          }
         });
       }
 
@@ -354,16 +764,14 @@
       });
 
       root.addEventListener('mouseleave', function () {
-        deactivateBrands();
+        syncCurrentBrandState();
       });
 
+      currentBrandId = getCurrentBrandId();
+      syncCurrentBrandState();
+      syncCurrentMobileState();
+
       if (isTouchLike) {
-        var firstTab = root.querySelector('[data-brand-tab]');
-
-        if (firstTab) {
-          activateBrand(firstTab.getAttribute('data-brand-tab'));
-        }
-
         root.querySelectorAll('[data-brand-tab]').forEach(function (tab) {
           tab.addEventListener('click', function (event) {
             event.preventDefault();
@@ -378,7 +786,7 @@
                 return;
               }
 
-              deactivateBrands();
+              syncCurrentBrandState();
               return;
             }
 
@@ -386,6 +794,69 @@
           });
         });
       }
+
+      root.querySelectorAll('[data-mobile-brand]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var brandId = btn.getAttribute('data-mobile-brand');
+          var panel = root.querySelector('[data-mobile-panel="' + brandId + '"]');
+          var isOpen = btn.getAttribute('aria-expanded') === 'true';
+
+          closeMobileItems(brandId);
+
+          if (!panel) {
+            return;
+          }
+
+          if (isOpen) {
+            btn.setAttribute('aria-expanded', 'false');
+            btn.parentNode.classList.remove('is-open');
+            panel.hidden = true;
+            return;
+          }
+
+          btn.setAttribute('aria-expanded', 'true');
+          btn.parentNode.classList.add('is-open');
+          panel.hidden = false;
+        });
+      });
+
+      root.querySelectorAll('[data-mobile-column-toggle]').forEach(function (btn) {
+        btn.addEventListener('click', function (event) {
+          event.preventDefault();
+          event.stopPropagation();
+
+          var column = btn.closest('.brand-logo-strip__mobile-column');
+          var panel = column ? column.querySelector('.brand-logo-strip__mobile-column-panel') : null;
+          var isOpen = btn.getAttribute('aria-expanded') === 'true';
+
+          if (!panel) {
+            return;
+          }
+
+          if (column && column.parentElement) {
+            column.parentElement.querySelectorAll('.brand-logo-strip__mobile-column').forEach(function (otherColumn) {
+              if (otherColumn === column) {
+                return;
+              }
+
+              var otherToggle = otherColumn.querySelector('[data-mobile-column-toggle]');
+              var otherPanel = otherColumn.querySelector('.brand-logo-strip__mobile-column-panel');
+
+              if (otherToggle) {
+                otherToggle.setAttribute('aria-expanded', 'false');
+              }
+
+              if (otherPanel) {
+                otherPanel.hidden = true;
+              }
+            });
+          }
+
+          btn.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+          panel.hidden = isOpen;
+          column.classList.toggle('is-open', !isOpen);
+        });
+      });
     })();
   </script>
 </div>
