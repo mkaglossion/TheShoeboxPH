@@ -3625,7 +3625,7 @@
             "settings": {
               "title": "Palladium",
               "image": "shopify://shop_images/Palladium-logo-1.png",
-              "brand_link": "",
+              "brand_link": "shopify://pages/palladium-shoes",
               "submenu_menu": "",
               "content_html": ""
             }
