@@ -3744,7 +3744,7 @@
           "mobile_padding_y": 14,
           "desktop_columns": 5,
           "mobile_columns": 3,
-          "desktop_gap": 5,
+          "desktop_gap": 0,
           "mobile_gap": 12,
           "desktop_row_height": 90,
           "mobile_row_height": 64,
