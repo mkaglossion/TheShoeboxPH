@@ -107,6 +107,7 @@
       "blocks": {
         "banner_gJpFd6": {
           "type": "banner",
+          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/VIONIC_BNR.jpg",
             "width": "12",
@@ -117,7 +118,7 @@
             "style_btn": "btn-underline btn-underline-white",
             "button_text": "",
             "button_icon": "",
-            "button_link": "shopify://pages/vionic-shoes",
+            "button_link": "",
             "vertical": "mid",
             "horizontal": "center",
             "text_align": "center"
