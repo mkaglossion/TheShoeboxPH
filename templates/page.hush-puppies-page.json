@@ -279,6 +279,7 @@
         "banner_Prhi8n",
         "banner_fg8YQa"
       ],
+      "disabled": true,
       "settings": {
         "animation": "",
         "paddingsection": "0px 0px 0px 0px",
@@ -301,6 +302,7 @@
     },
     "product_list_D6Cnz7": {
       "type": "product-list",
+      "disabled": true,
       "settings": {
         "animation": "",
         "paddingsection": "30px 0px 30px 0px",
