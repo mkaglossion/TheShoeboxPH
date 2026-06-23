@@ -79,7 +79,7 @@
       "settings": {
         "setwidth": "container-fluid",
         "aria_label": "Brand navigation",
-        "brand_menu_source": "main-menu",
+        "brand_menu_source": "main-menu-copy",
         "background": "#ffffff",
         "panel_background": "#ffffff",
         "panel_text": "#111111",
