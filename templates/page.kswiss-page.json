@@ -79,7 +79,7 @@
       "settings": {
         "setwidth": "container-fluid",
         "aria_label": "Brand navigation",
-        "brand_menu_source": "main-menu",
+        "brand_menu_source": "main-menu-copy",
         "background": "#ffffff",
         "panel_background": "#ffffff",
         "panel_text": "#111111",
@@ -89,7 +89,7 @@
         "padding_y": 18,
         "mobile_padding_y": 14,
         "desktop_columns": 5,
-        "mobile_columns": 3,
+        "mobile_columns": 1,
         "desktop_gap": 0,
         "mobile_gap": 12,
         "desktop_row_height": 90,

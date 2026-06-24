@@ -79,7 +79,7 @@
       "settings": {
         "setwidth": "container-fluid",
         "aria_label": "Brand navigation",
-        "brand_menu_source": "main-menu",
+        "brand_menu_source": "main-menu-copy",
         "background": "#ffffff",
         "panel_background": "#ffffff",
         "panel_text": "#111111",
@@ -107,6 +107,7 @@
       "blocks": {
         "banner_gJpFd6": {
           "type": "banner",
+          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/VIONIC_BNR.jpg",
             "width": "12",
@@ -117,7 +118,7 @@
             "style_btn": "btn-underline btn-underline-white",
             "button_text": "",
             "button_icon": "",
-            "button_link": "shopify://pages/vionic-shoes",
+            "button_link": "",
             "vertical": "mid",
             "horizontal": "center",
             "text_align": "center"
@@ -292,6 +293,44 @@
         "e_repeat": "no-repeat"
       }
     },
+    "vio_motion_support_Qm7pK2": {
+      "type": "vio-motion-support",
+      "blocks": {
+        "card_7qkR2c": {
+          "type": "card",
+          "settings": {
+            "logo_alt": "American Podiatric Medical Association Seal of Acceptance",
+            "card_title": "Trusted by Podiatric Specialist",
+            "card_text": "The American Podiatric Medical Association is the leading resource for foot health information. Many Vionic products carry the APMA Seal of Acceptance.",
+            "button_text": "Learn More",
+            "button_link": "https://vionicshoes.com.ph/pages/apma",
+            "open_in_new_tab": false
+          }
+        },
+        "card_2kP9mV": {
+          "type": "card",
+          "settings": {
+            "logo_alt": "VioLab",
+            "card_title": "The Source of Our Innovation",
+            "card_text": "Vionic benefits from the expertise of some of the finest minds in health and lower limb biomechanics with our VioLab.",
+            "button_text": "Learn More",
+            "button_link": "https://vionicshoes.com.ph/pages/violab",
+            "open_in_new_tab": false
+          }
+        }
+      },
+      "block_order": [
+        "card_7qkR2c",
+        "card_2kP9mV"
+      ],
+      "name": "Vio-motion Support",
+      "settings": {
+        "section_heading": "TRUSTED AND APPROVED BY EXPERTS",
+        "bg_color": "#fefefe",
+        "title_color": "#1f1f1f",
+        "heading_color": "#1f1f1f"
+      }
+    },
     "about_this_6KNmVW": {
       "type": "about-this",
       "blocks": {
@@ -366,6 +405,7 @@
     "grid_banner_9a6rrj",
     "product_list_pxWyiN",
     "advanced_content_nM9rP3",
+    "vio_motion_support_Qm7pK2",
     "about_this_6KNmVW"
   ]
 }
