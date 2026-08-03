@@ -6,6 +6,8 @@
     - enable_filtering: {Boolean} Show filtering when true
     - enable_sorting: {Boolean} Show sorting when true
     - collapse_on_larger_devices: {Boolean} Collapse filtering/sorting into menu on larger devices when true
+    - sidebar_layout: {String} Desktop sidebar presentation (optional)
+    - open_first_filter: {Boolean} Open the first desktop filter by default (optional)
 
     Usage:
     {% render 'facets', results: collection, enable_filtering: true, enable_sorting: true, collapse_on_larger_devices: false %}
@@ -14,6 +16,11 @@
 {%- liquid
   assign sort_by = results.sort_by | default: results.default_sort_by
   assign total_active_values = 0
+  assign native_filter_keys = '|'
+  for filter in results.filters
+    assign filter_key = filter.label | handleize
+    assign native_filter_keys = native_filter_keys | append: filter_key | append: '|'
+  endfor
   if results.url
     assign results_url = results.url
   else 
@@ -22,7 +29,7 @@
   endif
 -%}
 
-<div class="facets-container facets_sidebar">
+<div class="facets-container facets_sidebar{% if sidebar_layout == 'clean_accordion' %} facets_sidebar--clean{% endif %}">
   {%- unless collapse_on_larger_devices -%}
     <facet-filters-form class="facets d-none d-md-block">
       <form id="FacetFiltersForm" class="facets__form">
@@ -35,6 +42,12 @@
         {% if enable_filtering %}
 
           <div id="FacetsWrapperDesktop" class="facets__wrapper ">
+            {%- if results.filters != empty or results.products != empty -%}
+              <h2 class="facets__heading facets__heading--sidebar caption-large text-body{% unless sidebar_layout == 'clean_accordion' %} hide{% endunless %}">
+                {{ 'products.facets.filter_by_label' | t }}
+              </h2>
+            {%- endif -%}
+
             <div class="active-facets active-facets-desktop">
               {%- for filter in results.filters -%}
                 {%- for value in filter.active_values -%}
@@ -68,16 +81,45 @@
                 </a>
               </facet-remove>
             </div>
+            <div class="client-active-facets" data-client-active-facets hidden aria-live="polite">
+              <div class="client-active-facets__list" data-client-active-list></div>
+              <button type="button" class="client-active-facets__clear" data-client-clear-all data-results-url="{{ results_url }}">
+                {{ 'products.facets.clear_all' | t }}
+              </button>
+            </div>
 
-            {%- unless results.filters == empty -%}
-              <div class="facets__heading caption-large text-body hide">{{ 'products.facets.filter_by_label' | t }}</div>
-            {%- endunless -%}
+            {%- if sidebar_layout == 'clean_accordion' -%}
+              {%- unless native_filter_keys contains '|product-type|' -%}
+                {% render 'fallback-facet-group', results: results, filter_key: 'product-type', filter_label: 'Product Type', open_by_default: open_first_filter %}
+              {%- endunless -%}
+            {%- endif -%}
 
             {%- for filter in results.filters -%}
+              {%- assign filter_label_handle = filter.label | handleize -%}
+              {%- if sidebar_layout == 'clean_accordion' and filter_label_handle == 'availability' -%}
+                {%- continue -%}
+              {%- endif -%}
               {%- assign total_active_values = total_active_values | plus: filter.active_values.size -%}
+              {%- liquid
+                assign filter_is_open = true
+                if sidebar_layout == 'clean_accordion'
+                  assign filter_is_open = false
+                  if open_first_filter and forloop.first
+                    assign filter_is_open = true
+                  endif
+                  if filter.active_values.size > 0
+                    assign filter_is_open = true
+                  endif
+                  if filter.type == 'price_range'
+                    if filter.min_value.value != nil or filter.max_value.value != nil
+                      assign filter_is_open = true
+                    endif
+                  endif
+                endif
+              -%}
               {% case filter.type %}
               {% when 'list' %}
-                <details id="Details-{{ forloop.index }}-{{ section.id }}" class="disclosure-has-popup facets__disclosure js-filter" data-index="{{ forloop.index }}" open>
+                <details id="Details-{{ forloop.index }}-{{ section.id }}" class="disclosure-has-popup facets__disclosure js-filter" data-index="{{ forloop.index }}"{% if filter_is_open %} open{% endif %}>
                   <summary class="facets__summary caption-large focus-offset">
                     <div>
                       <span>{{ filter.label | escape }}</span>
@@ -161,8 +203,8 @@
                   endif
                   
                 %}
-                <details id="Details-{{ forloop.index }}-{{ section.id }}" class="disclosure-has-popup facets__disclosure js-filter" data-index="{{ forloop.index }}" open>
-                  <summary class="facets__summary caption-large focus-offset" aria-expanded="true">
+                <details id="Details-{{ forloop.index }}-{{ section.id }}" class="disclosure-has-popup facets__disclosure js-filter" data-index="{{ forloop.index }}"{% if filter_is_open %} open{% endif %}>
+                  <summary class="facets__summary caption-large focus-offset">
                     <div>
                       <span>{{ filter.label | escape }}</span>
                       {% render 'icon-caret' %}
@@ -227,6 +269,14 @@
                 </details>
               {% endcase %}
             {%- endfor -%}
+            {%- if sidebar_layout == 'clean_accordion' -%}
+              {%- unless native_filter_keys contains '|color|' or native_filter_keys contains '|colour|' -%}
+                {% render 'fallback-facet-group', results: results, filter_key: 'color', filter_label: 'Color', open_by_default: false %}
+              {%- endunless -%}
+              {%- unless native_filter_keys contains '|size|' -%}
+                {% render 'fallback-facet-group', results: results, filter_key: 'size', filter_label: 'Size', open_by_default: false %}
+              {%- endunless -%}
+            {%- endif -%}
             <noscript>
               <button type="submit" class="facets__button-no-js button button--tertiary">{{ 'products.facets.filter_button' | t }}</button>
             </noscript>
@@ -327,7 +377,20 @@
               </div>
             </div>
             <div class="mobile-facets__main">
+              <div class="client-active-facets client-active-facets--mobile" data-client-active-facets hidden aria-live="polite">
+                <div class="client-active-facets__list" data-client-active-list></div>
+                <button type="button" class="client-active-facets__clear" data-client-clear-all data-results-url="{{ results_url }}">
+                  {{ 'products.facets.clear_all' | t }}
+                </button>
+              </div>
+              {%- unless native_filter_keys contains '|product-type|' -%}
+                {% render 'fallback-facet-group', results: results, filter_key: 'product-type', filter_label: 'Product Type', open_by_default: false, mobile: true %}
+              {%- endunless -%}
               {%- for filter in results.filters -%}
+                {%- assign filter_label_handle = filter.label | handleize -%}
+                {%- if sidebar_layout == 'clean_accordion' and filter_label_handle == 'availability' -%}
+                  {%- continue -%}
+                {%- endif -%}
                 {% case filter.type %}
                 {% when 'list' %}
                   <details id="Details-Mobile-{{ forloop.index }}-{{ section.id }}" class="mobile-facets__details js-filter" data-index="mobile-{{ forloop.index }}">
@@ -454,6 +517,12 @@
                   </details>
                 {% endcase %}
               {%- endfor -%}
+              {%- unless native_filter_keys contains '|color|' or native_filter_keys contains '|colour|' -%}
+                {% render 'fallback-facet-group', results: results, filter_key: 'color', filter_label: 'Color', open_by_default: false, mobile: true %}
+              {%- endunless -%}
+              {%- unless native_filter_keys contains '|size|' -%}
+                {% render 'fallback-facet-group', results: results, filter_key: 'size', filter_label: 'Size', open_by_default: false, mobile: true %}
+              {%- endunless -%}
 
               {%- if enable_sorting -%}
                 <div class="mobile-facets__details js-filter" data-index="mobile-{{ forloop.index }}">

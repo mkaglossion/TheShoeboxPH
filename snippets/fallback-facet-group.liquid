@@ -1,0 +1,181 @@
+{% comment %}
+  Client-side fallback for common collection filters that have not been enabled
+  in Shopify Search & Discovery yet. Native filters always take precedence.
+
+  Accepts:
+  - results: {Object} Collection
+  - filter_key: {String} product-type, color, or size
+  - filter_label: {String}
+  - open_by_default: {Boolean}
+  - mobile: {Boolean} Render inside the mobile filter drawer (optional)
+{% endcomment %}
+
+{%- liquid
+  assign seen_handles = '|'
+-%}
+{%- capture serialized_values -%}
+  {%- for product in results.products -%}
+    {%- if filter_key == 'product-type' -%}
+      {%- assign value_label = product.type | strip -%}
+      {%- assign value_handle = value_label | handleize -%}
+      {%- assign value_marker = '|' | append: value_handle | append: '|' -%}
+      {%- if value_label != blank -%}
+        {%- unless seen_handles contains value_marker -%}
+          {{- value_handle -}}:::{{- value_label -}}|||
+          {%- assign seen_handles = seen_handles | append: value_handle | append: '|' -%}
+        {%- endunless -%}
+      {%- endif -%}
+    {%- else -%}
+      {%- for option in product.options_with_values -%}
+        {%- assign option_handle = option.name | handleize -%}
+        {%- assign option_matches = false -%}
+        {%- if filter_key == 'color' -%}
+          {%- if option_handle == 'color' or option_handle == 'colour' -%}
+            {%- assign option_matches = true -%}
+          {%- endif -%}
+        {%- elsif filter_key == 'size' and option_handle == 'size' -%}
+          {%- assign option_matches = true -%}
+        {%- endif -%}
+        {%- if option_matches -%}
+          {%- for value in option.values -%}
+            {%- assign value_label = value | strip -%}
+            {%- assign value_handle = value_label | handleize -%}
+            {%- assign value_marker = '|' | append: value_handle | append: '|' -%}
+            {%- if value_label != blank -%}
+              {%- unless seen_handles contains value_marker -%}
+                {{- value_handle -}}:::{{- value_label -}}|||
+                {%- assign seen_handles = seen_handles | append: value_handle | append: '|' -%}
+              {%- endunless -%}
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endcapture -%}
+
+{%- assign fallback_values = serialized_values | split: '|||' -%}
+{%- if serialized_values != blank -%}
+  {%- if mobile -%}
+    <details class="mobile-facets__details mobile-facets__details--fallback" data-client-facet-group="{{ filter_key }}"{% if open_by_default %} open{% endif %}>
+      <summary class="mobile-facets__summary focus-inset">
+        <div>
+          <span>{{ filter_label | escape }}</span>
+          {% render 'icon-caret' %}
+        </div>
+      </summary>
+      <div class="client-mobile-facet-values">
+        <ul class="facets__list list-unstyled" role="list">
+  {%- else -%}
+    <details class="disclosure-has-popup facets__disclosure facets__disclosure--fallback" data-client-facet-group="{{ filter_key }}"{% if open_by_default %} open{% endif %}>
+      <summary class="facets__summary caption-large focus-offset">
+        <div>
+          <span>{{ filter_label | escape }}</span>
+          {% render 'icon-caret' %}
+        </div>
+      </summary>
+      <div class="facets__display">
+        <ul class="facets__list list-unstyled" role="list">
+  {%- endif -%}
+        {%- for serialized_value in fallback_values -%}
+          {%- if serialized_value != blank -%}
+            {%- assign value_parts = serialized_value | split: ':::' -%}
+            {%- assign value_handle = value_parts[0] -%}
+            {%- assign value_label = value_parts[1] -%}
+            {%- assign value_count = 0 -%}
+            {%- if filter_key == 'color' -%}
+              {%- assign swatch_color = value_label | downcase -%}
+              {%- if value_handle contains 'black' -%}
+                {%- assign swatch_color = '#171717' -%}
+              {%- elsif value_handle contains 'white' -%}
+                {%- assign swatch_color = '#ffffff' -%}
+              {%- elsif value_handle contains 'grey' or value_handle contains 'gray' -%}
+                {%- assign swatch_color = '#808080' -%}
+              {%- elsif value_handle contains 'navy' -%}
+                {%- assign swatch_color = '#1f2f57' -%}
+              {%- elsif value_handle contains 'blue' -%}
+                {%- assign swatch_color = '#2f6fbd' -%}
+              {%- elsif value_handle contains 'red' -%}
+                {%- assign swatch_color = '#c93636' -%}
+              {%- elsif value_handle contains 'green' -%}
+                {%- assign swatch_color = '#477a50' -%}
+              {%- elsif value_handle contains 'yellow' -%}
+                {%- assign swatch_color = '#e6c744' -%}
+              {%- elsif value_handle contains 'orange' -%}
+                {%- assign swatch_color = '#df7b35' -%}
+              {%- elsif value_handle contains 'pink' -%}
+                {%- assign swatch_color = '#df8fa8' -%}
+              {%- elsif value_handle contains 'purple' or value_handle contains 'violet' -%}
+                {%- assign swatch_color = '#76539b' -%}
+              {%- elsif value_handle contains 'brown' -%}
+                {%- assign swatch_color = '#795548' -%}
+              {%- elsif value_handle contains 'beige' or value_handle contains 'cream' -%}
+                {%- assign swatch_color = '#e8ddc5' -%}
+              {%- elsif value_handle contains 'gold' -%}
+                {%- assign swatch_color = '#c9a227' -%}
+              {%- elsif value_handle contains 'silver' -%}
+                {%- assign swatch_color = '#b8bcc2' -%}
+              {%- endif -%}
+            {%- endif -%}
+            {%- for product in results.products -%}
+              {%- assign product_matches = false -%}
+              {%- if filter_key == 'product-type' -%}
+                {%- assign product_type_handle = product.type | handleize -%}
+                {%- if product_type_handle == value_handle -%}
+                  {%- assign product_matches = true -%}
+                {%- endif -%}
+              {%- else -%}
+                {%- for option in product.options_with_values -%}
+                  {%- assign option_handle = option.name | handleize -%}
+                  {%- assign option_matches = false -%}
+                  {%- if filter_key == 'color' -%}
+                    {%- if option_handle == 'color' or option_handle == 'colour' -%}
+                      {%- assign option_matches = true -%}
+                    {%- endif -%}
+                  {%- elsif filter_key == 'size' and option_handle == 'size' -%}
+                    {%- assign option_matches = true -%}
+                  {%- endif -%}
+                  {%- if option_matches -%}
+                    {%- for option_value in option.values -%}
+                      {%- assign option_value_handle = option_value | handleize -%}
+                      {%- if option_value_handle == value_handle -%}
+                        {%- assign product_matches = true -%}
+                        {%- break -%}
+                      {%- endif -%}
+                    {%- endfor -%}
+                  {%- endif -%}
+                  {%- if product_matches -%}{%- break -%}{%- endif -%}
+                {%- endfor -%}
+              {%- endif -%}
+              {%- if product_matches -%}
+                {%- assign value_count = value_count | plus: 1 -%}
+              {%- endif -%}
+            {%- endfor -%}
+
+            <li class="list-menu__item facets__item">
+              <label for="FallbackFilter-{{ filter_key }}-{{ value_handle }}-{{ section.id }}{% if mobile %}-mobile{% endif %}" class="facet-checkbox">
+                <input type="checkbox"
+                  id="FallbackFilter-{{ filter_key }}-{{ value_handle }}-{{ section.id }}{% if mobile %}-mobile{% endif %}"
+                  value="{{ value_handle }}"
+                  data-client-facet-input
+                  data-client-facet-key="{{ filter_key }}"
+                  data-client-facet-label="{{ value_label | escape }}">
+                {%- if filter_key == 'color' -%}
+                  <span class="fallback-color-swatch" style="--fallback-swatch-color: {{ swatch_color | escape }};" aria-hidden="true"></span>
+                {%- else -%}
+                  <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                    <rect width="16" height="16" stroke="currentColor" fill="none" stroke-width="1"></rect>
+                  </svg>
+                  <svg class="icon icon-checkmark" width="11" height="7" viewBox="0 0 11 7" fill="none" aria-hidden="true" focusable="false">
+                    <path d="M1.5 3.5L2.83333 4.75L4.16667 6L9.5 1" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"></path>
+                  </svg>
+                {%- endif -%}
+                {{ value_label | escape }} ({{ value_count }})
+              </label>
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+        </ul>
+      </div>
+    </details>
+{%- endif -%}

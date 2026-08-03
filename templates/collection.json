@@ -64,6 +64,8 @@
         "enable_filtering": true,
         "enable_sorting": true,
         "enable_filtering_sidebar": true,
+        "sidebar_layout": "clean_accordion",
+        "open_first_filter": true,
         "collapse_on_larger_devices": false,
         "enable_color": true,
         "style_color": "color_list",

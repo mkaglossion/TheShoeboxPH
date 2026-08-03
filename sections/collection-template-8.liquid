@@ -37,21 +37,29 @@
 
 {%- liquid
     assign is_sidebar = section.settings.enable_filtering_sidebar
+    assign sidebar_layout = section.settings.sidebar_layout
+    assign open_first_filter = section.settings.open_first_filter
+
+    if template.name == 'collection' and template.suffix == blank
+      assign sidebar_layout = 'clean_accordion'
+      assign open_first_filter = true
+    endif
 -%}
 
-<div class="section-{{ section.id }}-padding {% if is_sidebar %} container facet-filter-left{% endif %}">
+<div class="section-{{ section.id }}-padding {% if is_sidebar %} container facet-filter-left{% if sidebar_layout == 'clean_accordion' %} facet-filter-left--clean{% endif %}{% endif %}">
   {%- if is_sidebar -%}
       <div class="row">
   {%- endif -%}
   {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
     {{ 'component-facets.css' | asset_url | stylesheet_tag }}
     <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'fallback-facets-v2.js' | asset_url }}" defer="defer"></script>
     {%- if is_sidebar -%}
       <div class="col-md-3">
     {% endif %}
     <div class="{% if is_sidebar %} js-stick-parent {% else %} container {% endif %}" id="main-collection-filters" data-id="{{ section.id }}">
       {%- if is_sidebar -%}
-      {% render 'facets-sidebar', results: collection, enable_filtering: section.settings.enable_filtering, enable_sorting: section.settings.enable_sorting, collapse_on_larger_devices: section.settings.collapse_on_larger_devices %}
+      {% render 'facets-sidebar', results: collection, enable_filtering: section.settings.enable_filtering, enable_sorting: section.settings.enable_sorting, collapse_on_larger_devices: section.settings.collapse_on_larger_devices, sidebar_layout: sidebar_layout, open_first_filter: open_first_filter %}
       {%- else -%}
       {% render 'facets', results: collection, enable_filtering: section.settings.enable_filtering, enable_sorting: section.settings.enable_sorting, collapse_on_larger_devices: section.settings.collapse_on_larger_devices %}
       {%- endif -%}
@@ -91,7 +99,27 @@
                 {%- assign lazy_load = true -%}
               {%- endif -%}
 
-              <li class="grid__item {{gridProduct}}">
+              {%- capture product_color_handles -%}
+                {%- for option in product.options_with_values -%}
+                  {%- assign option_name_handle = option.name | handleize -%}
+                  {%- if option_name_handle == 'color' or option_name_handle == 'colour' -%}
+                    {%- for value in option.values -%}|{{ value | handleize }}|{%- endfor -%}
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- endcapture -%}
+              {%- capture product_size_handles -%}
+                {%- for option in product.options_with_values -%}
+                  {%- assign option_name_handle = option.name | handleize -%}
+                  {%- if option_name_handle == 'size' -%}
+                    {%- for value in option.values -%}|{{ value | handleize }}|{%- endfor -%}
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- endcapture -%}
+
+              <li class="grid__item {{gridProduct}}"
+                data-client-filter-product-type="|{{ product.type | handleize }}|"
+                data-client-filter-color="{{ product_color_handles | strip }}"
+                data-client-filter-size="{{ product_size_handles | strip }}">
                 {%- include 'product-card', product: product -%}
               </li>
             {%- endfor -%}
@@ -165,11 +193,15 @@
       "content": "Filter"
     },
     {
+      "type": "paragraph",
+      "content": "Manage filter names, sources, values, and order in Shopify Admin > Apps > Search & Discovery > Filters."
+    },
+    {
       "type": "checkbox",
       "id": "enable_filtering",
       "default": true,
       "label": "Enable filtering",
-      "info": "Customize [filters](/admin/menus)"
+      "info": "This section displays the active Shopify storefront filters dynamically."
     },
     {
       "type": "checkbox",
@@ -182,6 +214,29 @@
       "id": "enable_filtering_sidebar",
       "default": true,
       "label": "Display filter with left"
+    },
+    {
+      "type": "select",
+      "id": "sidebar_layout",
+      "label": "Sidebar filter style",
+      "default": "clean_accordion",
+      "options": [
+        {
+          "value": "classic",
+          "label": "Classic"
+        },
+        {
+          "value": "clean_accordion",
+          "label": "Clean accordion"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "open_first_filter",
+      "default": true,
+      "label": "Open first filter by default",
+      "info": "Filters with selected values always stay open."
     },
     {
       "type": "checkbox",
