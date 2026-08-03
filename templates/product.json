@@ -39,7 +39,7 @@
         "variant_available_enable": true,
         "wailist": false,
         "product_selector": "radio",
-        "sizeguide_enable": true,
+        "sizeguide_enable": false,
         "sizeguide_title": "Size guide",
         "sizeguide_page": "",
         "fake_view_enable": false,
