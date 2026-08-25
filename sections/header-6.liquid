@@ -1581,13 +1581,13 @@ input[type=search]::-webkit-search-cancel-button {
                 assign link_half = link_count | divided_by: 2
               -%}
             <div class="menudesk-left pr-3">
-                {%- include 'block-menu-6' with  limit: link_half -%}
+                {%- include 'block-menu-6' with limit, limit: link_half -%}
             </div>
             <div class="px-3">
                 {%- render 'site-logo' -%}
             </div>
             <div class="menudesk-right pl-3">
-                {%- include 'block-menu-6' with  offset: link_half -%}
+                {%- include 'block-menu-6' with offset, offset: link_half -%}
             </div>
         </div>
         <div class="ml-auto header-bottom__right font-family-1 col-2 {% if section.settings.enable_icon %} header-icon {% else %} header-text {% endif %}">
@@ -2031,4 +2031,16 @@ input[type=search]::-webkit-search-cancel-button {
     }
   ]
 }
-{% endschema %}
+{% endschema %}{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{%- include 'block-menu-6' with  limit: link_half -%}"
+  to: "{%- include 'block-menu-6' with limit, limit: link_half -%}"
+  position: 64023..64082
+- from: "{%- include 'block-menu-6' with  offset: link_half -%}"
+  to: "{%- include 'block-menu-6' with offset, offset: link_half -%}"
+  position: 64257..64318
+{%- endcomment -%}

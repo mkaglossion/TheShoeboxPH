@@ -11,8 +11,8 @@
            id="DrawerLabel-{{ grandchild_list_handle }}"
            {% if childlink.active %} aria-current="page"{% endif %}
            >
-          {%- include 'processMenuTitle' with itemName:childlink.title -%}
-          {%- include 'processMenuLabel' with itemName:childlink.title -%}
+          {%- include 'processMenuTitle' with itemName.childlink.title, itemName: childlink.title -%}
+          {%- include 'processMenuLabel' with itemName.childlink.title, itemName: childlink.title -%}
         </a>
         <button data-toggle="collapse" data-target="#DrawerLinklist-{{ grandchild_list_handle }}" type="button" aria-controls="DrawerLinklist-{{ grandchild_list_handle }}" class="text-link drawer__nav-toggle-btn drawer__nav-toggle-btn--small collapsed" aria-label="{{ link.title }} {{ 'general.drawers.menu' | t }}" aria-expanded="false">
           <span class="drawer__nav-toggle--open">
@@ -29,8 +29,8 @@
           {%- for grandchildlink in childlink.links -%}
           <li>
             <a href="{{ grandchildlink.url }}" class="meganav__link{% if grandchildlink.active %} meganav__link--active{% endif %}"{% if grandchildlink.active %} aria-current="page"{% endif %}>
-              {%- include 'processMenuTitle' with itemName:grandchildlink.title -%}
-              {%- include 'processMenuLabel' with itemName:grandchildlink.title -%}
+              {%- include 'processMenuTitle' with itemName.grandchildlink.title, itemName: grandchildlink.title -%}
+              {%- include 'processMenuLabel' with itemName.grandchildlink.title, itemName: grandchildlink.title -%}
             </a>
           </li>
           {%- endfor -%}
@@ -41,11 +41,42 @@
          class="drawer__nav-link meganav__link{% if childlink.active %} meganav__link--active{% endif %}"
          {% if childlink.active %} aria-current="page"{% endif %}
          >
-        {%- include 'processMenuTitle' with itemName:childlink.title -%}
-        {%- include 'processMenuLabel' with itemName:childlink.title -%}
+        {%- include 'processMenuTitle' with itemName.childlink.title, itemName: childlink.title -%}
+        {%- include 'processMenuLabel' with itemName.childlink.title, itemName: childlink.title -%}
       </a>
       {%- endif -%}
     </li>
     {%- endfor -%}
   </div>
 </div>
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{%- include 'processMenuTitle' with itemName:childlink.title -%}"
+  to: "{%- include 'processMenuTitle' with itemName.childlink.title, itemName: childlink.title
+    -%}"
+  position: 704..795
+- from: "{%- include 'processMenuLabel' with itemName:childlink.title -%}"
+  to: "{%- include 'processMenuLabel' with itemName.childlink.title, itemName: childlink.title
+    -%}"
+  position: 806..897
+- from: "{%- include 'processMenuTitle' with itemName:grandchildlink.title -%}"
+  to: "{%- include 'processMenuTitle' with itemName.grandchildlink.title, itemName:
+    grandchildlink.title -%}"
+  position: 2018..2119
+- from: "{%- include 'processMenuLabel' with itemName:grandchildlink.title -%}"
+  to: "{%- include 'processMenuLabel' with itemName.grandchildlink.title, itemName:
+    grandchildlink.title -%}"
+  position: 2134..2235
+- from: "{%- include 'processMenuTitle' with itemName:childlink.title -%}"
+  to: "{%- include 'processMenuTitle' with itemName.childlink.title, itemName: childlink.title
+    -%}"
+  position: 2568..2659
+- from: "{%- include 'processMenuLabel' with itemName:childlink.title -%}"
+  to: "{%- include 'processMenuLabel' with itemName.childlink.title, itemName: childlink.title
+    -%}"
+  position: 2668..2759
+{% endcomment %}
