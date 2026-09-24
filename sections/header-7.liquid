@@ -747,7 +747,7 @@
     }
 
     function getSearchURL(term) {
-      return '/search?type=product&q=' + encodeURIComponent('*' + term + '*');
+      return '/search?type=product&q=' + encodeURIComponent(term);
     }
 
     function initSearch(form) {
