@@ -31,8 +31,8 @@
       {%- endif -%}
       <li class="site-nav__item site-nav__item-mega {% unless isFullwidth %} site-nav__item-mega--custom{% endunless %} {% if link.active %} site-nav--active{% endif %}" data-width="{{widthMega}}">
         <a href="{{ link.url }}" class="site-nav__link dropdown-toggle" {% if link.active %} aria-current="page"{% endif %}>
-          <span class="site-nav__title">{%- include 'processMenuTitle' with itemName:link.title -%}</span>
-          {%- include 'processMenuLabel' with itemName:link.title -%}
+          <span class="site-nav__title">{%- include 'processMenuTitle' with itemName.link.title, itemName: link.title -%}</span>
+          {%- include 'processMenuLabel' with itemName.link.title, itemName: link.title -%}
         </a>
         <div class="site-nav__dropdown meganav meganav-{{intMega}} " >
           {%- include 'megamenu' -%}
@@ -41,8 +41,8 @@
       {%- elsif link.links != blank -%}
       <li class="site-nav__item site-nav__item-normal {% if link.active %} site-nav--active{% endif %}">
         <a href="{{ link.url }}" class="site-nav__link dropdown-toggle" {% if link.active %} aria-current="page"{% endif %}>
-          <span class="site-nav__title">{%- include 'processMenuTitle' with itemName:link.title -%}</span>
-          {%- include 'processMenuLabel' with itemName:link.title -%}
+          <span class="site-nav__title">{%- include 'processMenuTitle' with itemName.link.title, itemName: link.title -%}</span>
+          {%- include 'processMenuLabel' with itemName.link.title, itemName: link.title -%}
         </a>
         <div class="site-nav__dropdown meganav">
           <div class="meganav__nav">
@@ -53,11 +53,41 @@
       {%- else -%}
       <li class="site-nav__item{% if link.active %} site-nav--active{% endif %}">
         <a href="{{ link.url }}" class="site-nav__link"{% if link.active %} aria-current="page"{% endif %}>
-          <span class="site-nav__title">{%- include 'processMenuTitle' with itemName:link.title -%}</span>
-          {%- include 'processMenuLabel' with itemName:link.title -%}
+          <span class="site-nav__title">{%- include 'processMenuTitle' with itemName.link.title, itemName: link.title -%}</span>
+          {%- include 'processMenuLabel' with itemName.link.title, itemName: link.title -%}
         </a>
       </li>
       {%- endif -%}
       {%- endfor -%}
     </ul>
-  </nav>
+  </nav>{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{%- include 'processMenuTitle' with itemName:link.title -%}"
+  to: "{%- include 'processMenuTitle' with itemName.link.title, itemName: link.title
+    -%}"
+  position: 1532..1613
+- from: "{%- include 'processMenuLabel' with itemName:link.title -%}"
+  to: "{%- include 'processMenuLabel' with itemName.link.title, itemName: link.title
+    -%}"
+  position: 1631..1712
+- from: "{%- include 'processMenuTitle' with itemName:link.title -%}"
+  to: "{%- include 'processMenuTitle' with itemName.link.title, itemName: link.title
+    -%}"
+  position: 2171..2252
+- from: "{%- include 'processMenuLabel' with itemName:link.title -%}"
+  to: "{%- include 'processMenuLabel' with itemName.link.title, itemName: link.title
+    -%}"
+  position: 2270..2351
+- from: "{%- include 'processMenuTitle' with itemName:link.title -%}"
+  to: "{%- include 'processMenuTitle' with itemName.link.title, itemName: link.title
+    -%}"
+  position: 2783..2864
+- from: "{%- include 'processMenuLabel' with itemName:link.title -%}"
+  to: "{%- include 'processMenuLabel' with itemName.link.title, itemName: link.title
+    -%}"
+  position: 2882..2963
+{%- endcomment -%}

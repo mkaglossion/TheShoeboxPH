@@ -4,8 +4,8 @@
     {% assign childlink_url = childlink.url %}
     {% if childlink.links != blank %}
     <a href="{{ childlink_url }}" class="meganav__link meganav__link-toggle site-nav__link-toggle meganav__link--has-list{% if childlink.active %} meganav__link--active{% endif %}" {% if childlink.active %} aria-current="page"{% endif %}>
-      {% include 'processMenuTitle' with itemName:childlink.title %}
-      {% include 'processMenuLabel' with itemName:childlink.title %}
+      {% include 'processMenuTitle' with itemName.childlink.title, itemName: childlink.title %}
+      {% include 'processMenuLabel' with itemName.childlink.title, itemName: childlink.title %}
       {% include 'icon-arrow-right' %}
     </a>
     <div class="site-nav__dropdown site-nav__dropdown--third-level">
@@ -13,8 +13,8 @@
         {% for grandchildlink in childlink.links %}
         <li class="site-nav__dropdown-container site-nav__dropdown-container--third-level">
           <a href="{{ grandchildlink.url }}" class="meganav__link {% if grandchildlink.active %} meganav__link--active{% endif %}"{% if grandchildlink.active %} aria-current="page"{% endif %}>
-            {% include 'processMenuTitle' with itemName:grandchildlink.title %}
-            {% include 'processMenuLabel' with itemName:grandchildlink.title %}
+            {% include 'processMenuTitle' with itemName.grandchildlink.title, itemName: grandchildlink.title %}
+            {% include 'processMenuLabel' with itemName.grandchildlink.title, itemName: grandchildlink.title %}
           </a>
         </li>
         {% endfor %}
@@ -22,10 +22,40 @@
     </div>
     {% else %}
     <a href="{{ childlink_url }}" class="meganav__link {% if childlink.active %} meganav__link--active{% endif %}"{% if childlink.active %} aria-current="page"{% endif %}>
-      {% include 'processMenuTitle' with itemName:childlink.title %}
-      {% include 'processMenuLabel' with itemName:childlink.title %}
+      {% include 'processMenuTitle' with itemName.childlink.title, itemName: childlink.title %}
+      {% include 'processMenuLabel' with itemName.childlink.title, itemName: childlink.title %}
     </a>
     {% endif %}
   </li>
   {% endfor %}
-</ul>
+</ul>{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% include 'processMenuTitle' with itemName:childlink.title %}"
+  to: "{% include 'processMenuTitle' with itemName.childlink.title, itemName: childlink.title
+    %}"
+  position: 480..569
+- from: "{% include 'processMenuLabel' with itemName:childlink.title %}"
+  to: "{% include 'processMenuLabel' with itemName.childlink.title, itemName: childlink.title
+    %}"
+  position: 576..665
+- from: "{% include 'processMenuTitle' with itemName:grandchildlink.title %}"
+  to: "{% include 'processMenuTitle' with itemName.grandchildlink.title, itemName:
+    grandchildlink.title %}"
+  position: 1165..1264
+- from: "{% include 'processMenuLabel' with itemName:grandchildlink.title %}"
+  to: "{% include 'processMenuLabel' with itemName.grandchildlink.title, itemName:
+    grandchildlink.title %}"
+  position: 1277..1376
+- from: "{% include 'processMenuTitle' with itemName:childlink.title %}"
+  to: "{% include 'processMenuTitle' with itemName.childlink.title, itemName: childlink.title
+    %}"
+  position: 1643..1732
+- from: "{% include 'processMenuLabel' with itemName:childlink.title %}"
+  to: "{% include 'processMenuLabel' with itemName.childlink.title, itemName: childlink.title
+    %}"
+  position: 1739..1828
+{%- endcomment -%}

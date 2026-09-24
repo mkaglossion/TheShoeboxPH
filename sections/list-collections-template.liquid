@@ -52,12 +52,12 @@
             {% if section.settings.layout == 'list' %}
               {% include 'collection-list-item' %}
             {% elsif section.settings.layout == 'grid2'%}
-              {% include 'collection-grid-item-2' with height: height %}
+              {% include 'collection-grid-item-2' with height, height: height %}
             {% elsif section.settings.layout == 'grid'%}
               {% if collection_count > 4 and forloop.index > 3 %}
                 {% assign row_number = forloop.index | divided_by: 3.0 | ceil %}
               {% endif %}
-              {% include 'collection-grid-item' with height: height %}
+              {% include 'collection-grid-item' with height, height: height %}
             {% endif %}
           {% endunless %}
         {% endfor %}
@@ -71,12 +71,12 @@
             {% if section.settings.layout == 'list' %}
               {% include 'collection-list-item' %}
             {% elsif section.settings.layout == 'grid2'%}
-              {% include 'collection-grid-item-2' with height: height %}
+              {% include 'collection-grid-item-2' with height, height: height %}
             {% elsif section.settings.layout == 'grid'%}
               {% if collection_count > 4 and forloop.index > 3 %}
                 {% assign row_number = forloop.index | divided_by: 3.0 | ceil %}
               {% endif %}
-              {% include 'collection-grid-item' with height: height %}
+              {% include 'collection-grid-item' with height, height: height %}
             {% endif %}
           {% endunless %}
         {% endfor %}
@@ -90,12 +90,12 @@
         {% if section.settings.layout == 'list' %}
           {% include 'collection-list-item' %}
         {% elsif section.settings.layout == 'grid2'%}
-            {% include 'collection-grid-item-2' with height: height %}
+            {% include 'collection-grid-item-2' with height, height: height %}
         {% elsif section.settings.layout == 'grid'%}
           {% if collection_count > 4 and forloop.index > 3 %}
             {% assign row_number = forloop.index | divided_by: 3.0 | ceil %}
           {% endif %}
-          {% include 'collection-grid-item' with height: height %}
+          {% include 'collection-grid-item' with height, height: height %}
         {% endif %}
       {% endfor %}
     </div>
@@ -197,3 +197,28 @@
   ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% include 'collection-grid-item-2' with height: height %}"
+  to: "{% include 'collection-grid-item-2' with height, height: height %}"
+  position: 2290..2356
+- from: "{% include 'collection-grid-item' with height: height %}"
+  to: "{% include 'collection-grid-item' with height, height: height %}"
+  position: 2601..2665
+- from: "{% include 'collection-grid-item-2' with height: height %}"
+  to: "{% include 'collection-grid-item-2' with height, height: height %}"
+  position: 3237..3303
+- from: "{% include 'collection-grid-item' with height: height %}"
+  to: "{% include 'collection-grid-item' with height, height: height %}"
+  position: 3548..3612
+- from: "{% include 'collection-grid-item-2' with height: height %}"
+  to: "{% include 'collection-grid-item-2' with height, height: height %}"
+  position: 4132..4198
+- from: "{% include 'collection-grid-item' with height: height %}"
+  to: "{% include 'collection-grid-item' with height, height: height %}"
+  position: 4423..4487
+{% endcomment %}

@@ -5,8 +5,8 @@
     <div class="mega-col-inner ">
       <div class="menu-title">
         <a href="{{ childlink.url }}" >
-          {%- include 'processMenuTitle' with itemName:childlink.title -%}
-          {%- include 'processMenuLabel' with itemName:childlink.title -%}
+          {%- include 'processMenuTitle' with itemName.childlink.title, itemName: childlink.title -%}
+          {%- include 'processMenuLabel' with itemName.childlink.title, itemName: childlink.title -%}
         </a>
       </div>
       <div class="widget-inner">
@@ -15,8 +15,8 @@
           {%- for grandchildlink in childlink.links -%}
           <li>
             <a href="{{ grandchildlink.url }}" >
-              {%- include 'processMenuTitle' with itemName:grandchildlink.title -%}
-              {%- include 'processMenuLabel' with itemName:grandchildlink.title -%}
+              {%- include 'processMenuTitle' with itemName.grandchildlink.title, itemName: grandchildlink.title -%}
+              {%- include 'processMenuLabel' with itemName.grandchildlink.title, itemName: grandchildlink.title -%}
             </a>
           </li>
           {%- endfor -%}
@@ -27,4 +27,26 @@
   </div>
   {%- endfor -%}
   {%- endif -%}
-</div>
+</div>{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{%- include 'processMenuTitle' with itemName:childlink.title -%}"
+  to: "{%- include 'processMenuTitle' with itemName.childlink.title, itemName: childlink.title
+    -%}"
+  position: 256..347
+- from: "{%- include 'processMenuLabel' with itemName:childlink.title -%}"
+  to: "{%- include 'processMenuLabel' with itemName.childlink.title, itemName: childlink.title
+    -%}"
+  position: 358..449
+- from: "{%- include 'processMenuTitle' with itemName:grandchildlink.title -%}"
+  to: "{%- include 'processMenuTitle' with itemName.grandchildlink.title, itemName:
+    grandchildlink.title -%}"
+  position: 720..821
+- from: "{%- include 'processMenuLabel' with itemName:grandchildlink.title -%}"
+  to: "{%- include 'processMenuLabel' with itemName.grandchildlink.title, itemName:
+    grandchildlink.title -%}"
+  position: 836..937
+{%- endcomment -%}
