@@ -191,11 +191,12 @@
         "banner_VDTapJ",
         "banner_m4DqcD"
       ],
+      "custom_css": [],
       "settings": {
         "animation": "",
         "paddingsection": "10px 0px 0px 0px",
         "paddingmobile": "10px 0px 0px 0px",
-        "marginsection": "0px 0px 0px 0px",
+        "marginsection": "50px 50px 50px 50px",
         "marginmobile": "0px 0px 0px 0px",
         "bgsection": "#fefefe",
         "bgstyle": false,
