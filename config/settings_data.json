@@ -3690,6 +3690,7 @@
         "blocks": {
           "banner_slide_DbXgVB": {
             "type": "banner_slide",
+            "disabled": true,
             "settings": {
               "desktop_image": "shopify://shop_images/Charge_Sneakers_Banner_2_76290051-6406-4181-b0ab-a354a103ce6f.jpg",
               "mobile_image": "shopify://shop_images/Artboard_3.jpg",
@@ -3701,7 +3702,6 @@
           "banner_slide_nq4gaC": {
             "type": "banner_slide",
             "name": "October Banner",
-            "disabled": true,
             "settings": {
               "desktop_image": "shopify://shop_images/desktop_V.jpg",
               "mobile_image": "shopify://shop_images/Mobile_V.jpg",
